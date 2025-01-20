@@ -11,7 +11,12 @@ $data = $loader->getData();
 
 // var_dump($data);
 
+use Auth\Login;
 
+
+echo "<h1>Bienvenue sur le projet</h1>";
+echo '<a href="login.php">Connexion</a>';
+echo '<a href="register.php">Inscription</a>';
 
 
 ?>
