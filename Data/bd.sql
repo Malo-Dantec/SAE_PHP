@@ -1,0 +1,80 @@
+DROP TABLE IF EXISTS DONNER;
+DROP TABLE IF EXISTS CARACTERISER;
+DROP TABLE IF EXISTS CUISINER;
+DROP TABLE IF EXISTS AVIS;
+DROP TABLE IF EXISTS CARACTERISTIQUE;
+DROP TABLE IF EXISTS TYPE_CUISINE;
+DROP TABLE IF EXISTS RESTAURANT;
+DROP TABLE IF EXISTS CLIENT;
+
+CREATE TABLE CLIENT (
+    idCl INTEGER NOT NULL,
+    dateDeNaissance DATE,
+    email TEXT UNIQUE,
+    numTel INTEGER UNIQUE,
+    PRIMARY KEY (idCl)
+);
+
+CREATE TABLE AVIS (
+    idAvis INTEGER NOT NULL,
+    note INTEGER NOT NULL,
+    texteAvis TEXT NOT NULL,
+    PRIMARY KEY (idAvis)
+);
+
+CREATE TABLE DONNER (
+    idAvis INTEGER NOT NULL,
+    idCl INTEGER NOT NULL,
+    datePoste INTEGER NOT NULL,
+    PRIMARY KEY (idAvis, idCl, datePoste)
+    FOREIGN KEY (idAvis) REFERENCES AVIS (idAvis),
+    FOREIGN KEY (idCl) REFERENCES CLIENT (idCl)
+);
+
+CREATE TABLE RESTAURANT (
+    idRestau INTEGER NOT NULL,
+    typeRestau TEXT,
+    nomRestau TEXT NOT NULL,
+    heureOuverture TEXT,
+    siret INTEGER,
+    numTel INTEGER UNIQUE,
+    codeCommune INTEGER NOT NULL,
+    nomCommune TEXT NOT NULL,
+    codeRegion INTEGER NOT NULL,
+    nomRegion TEXT NOT NULL,
+    codeDepartement INTEGER NOT NULL,
+    nomDepartement TEXT NOT NULL,
+    osm_edit TEXT,
+    PRIMARY KEY (idRestau)
+);
+
+CREATE TABLE CARACTERISTIQUE (
+    idCarac INTEGER NOT NULL,
+    carcteristiqueRestau TEXT NOT NULL,
+    PRIMARY KEY (idCarac)
+);
+
+CREATE TABLE CARACTERISER ( 
+    idCarac INTEGER NOT NULL,
+    idRestau INTEGER NOT NULL,
+    PRIMARY KEY(idCarac, idRestau),
+    FOREIGN KEY (idCarac) REFERENCES CARACTERISTIQUE (idCarac),
+    FOREIGN KEY (idRestau) REFERENCES RESTAURANT (idRestau)
+);
+
+
+CREATE TABLE TYPE_CUISINE (
+    idTypeCuisine INTEGER NOT NULL,
+    nomCuisine TEXT NOT NULL,
+    PRIMARY KEY (idTypeCuisine)
+);
+
+
+CREATE TABLE CUISINER (
+    idTypeCuisine INTEGER NOT NULL,
+    idRestau INTEGER NOT NULL,
+    PRIMARY KEY(idTypeCuisine, idRestau),
+    FOREIGN KEY (idTypeCuisine) REFERENCES TYPE_CUISINE (idTypeCuisine),
+    FOREIGN KEY (idRestau) REFERENCES RESTAURANT (idRestau)
+);
+
