@@ -1,1 +1,1 @@
-Malo DANTEC, Tony KERGUEN, Lucas DEVERS--DORE, Pierre Gangneux
+Malo DANTEC, Tony KERGUEN, Lucas DEVERS--DORE, Pierre GANGNEUX
