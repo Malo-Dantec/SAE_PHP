@@ -5,11 +5,15 @@ require 'Classes/Autoloader.php';
 Autoloader::register();
 
 use Provider\DataLoaderJson;
+use Model\Restaurant;
 
 $loader = new DataLoaderJson("Data/restaurants_orleans.json");
 $data = $loader->getData();
 
-// var_dump($data);
+$restaurants = new Restaurant($data);
+
+
+var_dump($restaurants->getRestaurnantsByType("bar"));
 
 
 
