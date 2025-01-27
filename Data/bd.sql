@@ -26,7 +26,7 @@ CREATE TABLE DONNER (
     idAvis INTEGER NOT NULL,
     idCl INTEGER NOT NULL,
     datePoste INTEGER NOT NULL,
-    PRIMARY KEY (idAvis, idCl, datePoste)
+    PRIMARY KEY (idAvis, idCl, datePoste),
     FOREIGN KEY (idAvis) REFERENCES AVIS (idAvis),
     FOREIGN KEY (idCl) REFERENCES CLIENT (idCl)
 );
