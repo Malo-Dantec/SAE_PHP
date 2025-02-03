@@ -1,6 +1,8 @@
 <?php
+
 declare(strict_types=1);
 require 'Classes/Autoloader.php';
+require 'Render.php';
 
 Autoloader::register();
 
@@ -20,5 +22,4 @@ echo '<a href="register.php">Inscription</a>';
 
 
 ?>
-
 
