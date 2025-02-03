@@ -1,8 +1,8 @@
 <?php
 require_once 'config/database.php';
-require_once 'classes/Controller/RegisterController.php';
-require_once 'classes/Model/User.php';
-require_once 'classes/Auth/Register.php';
+require_once 'Classes/Controller/RegisterController.php';
+require_once 'Classes/Model/User.php';
+require_once 'Classes/Auth/Register.php';
 
 use Config\Database;
 use Controller\RegisterController;
@@ -19,3 +19,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 } else {
     $controller->showRegisterForm();
 }
+
+echo '<a href="index.php">Accueil</a>';

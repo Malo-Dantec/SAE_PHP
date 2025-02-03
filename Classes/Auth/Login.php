@@ -1,11 +1,18 @@
 <?php
-declare(strict_types=1);
-
 namespace Auth;
+
+use Model\User;
+use PDO;
 
 class Login {
     private string $email = '';
     private string $password = '';
+    private User $userModel;
+
+    public function __construct(PDO $db) {
+        $this->userModel = new User($db); // Initialiser la classe User
+        session_start(); // Démarrer la session pour gérer l'authentification
+    }
 
     // Méthode pour afficher le formulaire
     public function render(): void {
@@ -23,18 +30,16 @@ class Login {
     // Méthode pour traiter les données envoyées par le formulaire
     public function handleRequest(): bool {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            // Récupération des données postées
             $this->email = $_POST['email'] ?? '';
             $this->password = $_POST['password'] ?? '';
 
-            // Validation des données (par exemple, vérifier si non vide)
             if (empty($this->email) || empty($this->password)) {
                 echo "L'email ou le mot de passe est vide.";
                 return false;
             }
 
-            // Vérification des identifiants (simulateur pour l'exemple)
             if ($this->authenticate($this->email, $this->password)) {
+                $_SESSION['user_email'] = $this->email; // Stocke l'email en session
                 echo "Connexion réussie.";
                 return true;
             } else {
@@ -45,14 +50,8 @@ class Login {
         return false;
     }
 
-    // Méthode pour authentifier l'utilisateur (exemple simple, à adapter avec une base de données)
+    // Méthode pour authentifier l'utilisateur avec la base de données
     private function authenticate(string $email, string $password): bool {
-        // Simuler des identifiants valides
-        $validEmail = 'test@example.com';
-        $validPassword = 'password123';
-
-        return $email === $validEmail && $password === $validPassword;
+        return $this->userModel->verifyPassword($email, $password);
     }
 }
-
-?>
