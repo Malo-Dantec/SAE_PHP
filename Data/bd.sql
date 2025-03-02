@@ -6,12 +6,26 @@ DROP TABLE IF EXISTS CARACTERISTIQUE;
 DROP TABLE IF EXISTS TYPE_CUISINE;
 DROP TABLE IF EXISTS RESTAURANT;
 DROP TABLE IF EXISTS CLIENT;
+DROP TABLE IF EXISTS ADMIN;
 
+
+CREATE TABLE ADMIN (
+    idAdmin INTEGER NOT NULL,
+    email TEXT UNIQUE,
+    numTel INTEGER UNIQUE,
+    nomAdm TEXT,
+    prenomAdm TEXT
+    PRIMARY KEY (idAdmin)
+);
+
+    
 CREATE TABLE CLIENT (
     idCl INTEGER NOT NULL,
     dateDeNaissance DATE,
     email TEXT UNIQUE,
     numTel INTEGER UNIQUE,
+    nomCl TEXT,
+    prenomCl TEXT
     PRIMARY KEY (idCl)
 );
 
@@ -26,8 +40,10 @@ CREATE TABLE DONNER (
     idAvis INTEGER NOT NULL,
     idCl INTEGER NOT NULL,
     datePoste INTEGER NOT NULL,
-    PRIMARY KEY (idAvis, idCl, datePoste),
+    idRestau INTEGER NOT NULL,
+    PRIMARY KEY (idAvis, idCl, datePoste, idRestau),
     FOREIGN KEY (idAvis) REFERENCES AVIS (idAvis),
+    FOREIGN KEY (idRestau) REFERENCES RESTAURANT (idRestau),
     FOREIGN KEY (idCl) REFERENCES CLIENT (idCl)
 );
 
