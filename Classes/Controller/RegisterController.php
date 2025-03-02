@@ -19,7 +19,7 @@ class RegisterController {
     public function processRegister(): void {
         $register = new Register($this->db); // Passe la connexion PDO
         if ($register->handleRequest()) {
-            header('Location: /index.php'); // Rediriger après l'inscription
+            header('Location: /login.php'); // Rediriger après l'inscription
             exit;
         } else {
             echo "Erreur lors de l'inscription.";

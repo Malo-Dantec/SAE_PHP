@@ -21,7 +21,7 @@ class User {
         $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
 
         // Insérer l'utilisateur dans la base de données
-        $stmt = $this->db->prepare('INSERT INTO users (email, password) VALUES (:email, :password)');
+        $stmt = $this->db->prepare('INSERT INTO USER (email, password) VALUES (:email, :password)');
         return $stmt->execute(['email' => $email, 'password' => $hashedPassword]);
     }
 
@@ -29,7 +29,7 @@ class User {
      * Trouver un utilisateur par email.
      */
     public function findByEmail(string $email): ?array {
-        $stmt = $this->db->prepare('SELECT * FROM users WHERE email = :email');
+        $stmt = $this->db->prepare('SELECT * FROM USER WHERE email = :email');
         $stmt->execute(['email' => $email]);
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -53,7 +53,7 @@ class User {
      * Supprimer un utilisateur par email.
      */
     public function deleteByEmail(string $email): bool {
-        $stmt = $this->db->prepare('DELETE FROM users WHERE email = :email');
+        $stmt = $this->db->prepare('DELETE FROM USER WHERE email = :email');
         return $stmt->execute(['email' => $email]);
     }
 
@@ -61,7 +61,7 @@ class User {
      * Récupérer tous les utilisateurs.
      */
     public function findAll(): array {
-        $stmt = $this->db->query('SELECT * FROM users');
+        $stmt = $this->db->query('SELECT * FROM USER');
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }

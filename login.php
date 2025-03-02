@@ -1,5 +1,5 @@
 <?php
-require_once 'config/database.php';
+require_once 'Config/Database.php';
 require_once 'Classes/Controller/LoginController.php';
 require_once 'Classes/Model/User.php';
 require_once 'Classes/Auth/Login.php';

@@ -1,18 +1,12 @@
 <?php
 
-
-Class Autoloader {
-
+class Autoloader {
     static function register() {
-        // var_dump(__CLASS__);
-        spl_autoload_register(array(__CLASS__, 'autoload'));   
+        spl_autoload_register([__CLASS__, 'autoload']);   
     }
 
     static function autoload($fqcn) {
-        // var_dump($fqcn);
-        $path = str_replace('\\', '/', $fqcn).'.php';
-        require 'Classes/'.$path;
+        $path = str_replace('\\', '/', $fqcn) . '.php';
+        $file = __DIR__ . '/' . $path;
     }
-
-    
 }
