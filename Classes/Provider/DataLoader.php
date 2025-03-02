@@ -3,13 +3,14 @@ declare(strict_types=1);
 
 namespace Provider;
 
-abstract class DataLoader implements DataLoaderInterface {
-    protected $data = [];
+require_once '/DataLoaderInterface.php';
+use Provider\DataLoaderInterface;
 
-    public function getData():array {
+abstract class DataLoader implements DataLoaderInterface {
+    protected array $data = [];
+
+    public function getData(): array {
         return $this->data;
     }
 }
-
-
 ?>

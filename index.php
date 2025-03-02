@@ -1,28 +1,24 @@
 <?php
-
-<<<<<<< Updated upstream
-require 'Render.php';
-=======
 declare(strict_types=1);
-require 'Classes/Autoloader.php';
+session_start();
+if (!file_exists(__DIR__ . '/routes.php')) {
+    die("Le fichier routes.php est introuvable.");
+}
+require_once __DIR__ . '/routes.php';
 
+require_once 'Classes/Autoloader.php';
 Autoloader::register();
-
-use Provider\DataLoaderJson;
-
-$loader = new DataLoaderJson("Data/restaurants_orleans.json");
-$data = $loader->getData();
-
-// var_dump($data);
 
 use Auth\Login;
 
-
-echo "<h1>Bienvenue sur le projet</h1>";
-echo '<a href="login.php">Connexion</a>';
-echo '<a href="register.php">Inscription</a>';
+if (isset($_SESSION['email'])) {
+    echo "<a href='logout.php'>Déconnexion</a>";
+} else {
+    echo '<a href="login.php">Connexion</a>';
+    echo '<a href="register.php">Inscription</a>';
+}
 
 
 ?>
 
->>>>>>> Stashed changes
+
