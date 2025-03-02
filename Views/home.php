@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>IUTables'O</title>
+    <link rel="stylesheet" href="Public\css\header.css">
+    <link rel="stylesheet" href="Public\css\main.css">
+    <link rel="stylesheet" href="Public\css\footer.css">
 </head>
 <body>
     <?php 
