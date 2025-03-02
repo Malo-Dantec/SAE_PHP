@@ -20,4 +20,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $controller->showRegisterForm();
 }
 
-echo '<a href="index.php">Accueil</a>';
+echo "<a href='index.php'>Accueil</a>";
+echo "<a href='login.php'>Se connecter</a>";
