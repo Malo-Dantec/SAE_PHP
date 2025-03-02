@@ -1,18 +1,21 @@
-<?php 
-declare(strict_types=1);
+<?php
 
 namespace Provider;
 
-final class DataLoaderJson extends DataLoader {
-    public function __construct(string $source) {
-        $content = file_get_contents($source);
-        $this->data = json_decode($content, true);
-        if(empty($this->data)) {
-            throw new \Exception(sprintf("No data in \s"));
-        }
+class DataLoaderJson {
+    private string $filePath;
+
+    public function __construct(string $filePath) {
+        $fullPath = realpath($filePath);
+        $this->filePath = $fullPath;
+        if (!file_exists($fullPath)) {
+            var_dump($fullPath);
+            throw new \Exception(":warning: Fichier JSON introuvable : " . $fullPath);
+        }        
+    }
+
+    public function getData(): array {
+        $json = file_get_contents($this->filePath);
+        return json_decode($json, true) ?? [];
     }
 }
-
-
-
-?>

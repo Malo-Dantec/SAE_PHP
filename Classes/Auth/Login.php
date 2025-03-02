@@ -39,7 +39,7 @@ class Login {
             }
 
             if ($this->authenticate($this->email, $this->password)) {
-                $_SESSION['user_email'] = $this->email; // Stocke l'email en session
+                $_SESSION['email'] = $this->email; // Stocke l'email en session
                 echo "Connexion réussie.";
                 return true;
             } else {
