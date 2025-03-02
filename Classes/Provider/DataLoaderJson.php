@@ -6,11 +6,11 @@ class DataLoaderJson {
     private string $filePath;
 
     public function __construct(string $filePath) {
-        $fullPath = realpath(__DIR__ . "/.." . $filePath);
-        var_dump(file_exists($filePath));
+        $fullPath = realpath($filePath);
+        $this->filePath = $fullPath;
         if (!file_exists($fullPath)) {
             var_dump($fullPath);
-            throw new \Exception("⚠️ Fichier JSON introuvable : " . $fullPath);
+            throw new \Exception(":warning: Fichier JSON introuvable : " . $fullPath);
         }        
     }
 

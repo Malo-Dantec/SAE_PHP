@@ -12,8 +12,6 @@ class RestaurantController {
         try {
             $loader = new DataLoaderJson(__DIR__ . "/../../Data/restaurants_orleans.json");
             $this->restaurants = $loader->getData();
-            echo "Données chargées avec succès !";
-            die();
         } catch (Throwable $e) {
             die("Erreur dans RestaurantController : " . $e->getMessage());
         }
