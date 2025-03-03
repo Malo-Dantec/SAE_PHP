@@ -35,35 +35,45 @@ CREATE TABLE DONNER (
     idAvis INTEGER NOT NULL,
     idUser INTEGER NOT NULL,
     datePoste INTEGER NOT NULL,
-    idRestau INTEGER NOT NULL,
-    PRIMARY KEY (idAvis, idUser, datePoste, idRestau),
+    siret INTEGER NOT NULL,
+    PRIMARY KEY (idAvis, idUser, datePoste, siret),
     FOREIGN KEY (idAvis) REFERENCES AVIS (idAvis),
-    FOREIGN KEY (idRestau) REFERENCES RESTAURANT (idRestau),
+    FOREIGN KEY (siret) REFERENCES RESTAURANT (siret),
     FOREIGN KEY (idUser) REFERENCES CLIENT (idUser)
 );
 
 CREATE TABLE RESTAURANT (
-    idRestau INTEGER NOT NULL,
-    typeRestau TEXT,
-    nomRestau TEXT NOT NULL,
-    heureOuverture TEXT,
-    siret INTEGER,
-    numTel INTEGER UNIQUE,
-    codeCommune INTEGER NOT NULL,
-    nomCommune TEXT NOT NULL,
-    codeRegion INTEGER NOT NULL,
-    nomRegion TEXT NOT NULL,
-    codeDepartement INTEGER NOT NULL,
-    nomDepartement TEXT NOT NULL,
+    siret INTEGER NOT NULL,
+    type TEXT,
+    name TEXT NOT NULL,
+    brand TEXT,
+    opening_hours TEXT,
+    phone INTEGER UNIQUE,
+    code_commune INTEGER NOT NULL,
+    commune TEXT NOT NULL,
+    code_region INTEGER NOT NULL,
+    region TEXT NOT NULL,
+    code_departement INTEGER NOT NULL,
+    departement TEXT NOT NULL,
     osm_edit TEXT,
-    PRIMARY KEY (idRestau)
+    longitude TEXT,
+    latitude TEXT,
+    osm_id TEXT,
+    wikidata TEXT,
+    brand_wikidata TEXT,
+    website TEXT,
+    facebook TEXT,
+    com_insee TEXT,
+    osm_edit TEXT,
+    operator TEXT
+    PRIMARY KEY (siret)
 );
 
 CREATE TABLE FAVORIS (
-    idRestau INTEGER NOT NULL,
+    siret INTEGER NOT NULL,
     idUser INTEGER NOT NULL,
-    PRIMARY KEY (idRestau, idUser),
-    FOREIGN KEY (idRestau) REFERENCES RESTAURANT (idRestau),
+    PRIMARY KEY (siret, idUser),
+    FOREIGN KEY (siret) REFERENCES RESTAURANT (siret),
     FOREIGN KEY (idUser) REFERENCES USER (idUser)
 );
 
@@ -75,10 +85,10 @@ CREATE TABLE CARACTERISTIQUE (
 
 CREATE TABLE CARACTERISER ( 
     idCarac INTEGER NOT NULL,
-    idRestau INTEGER NOT NULL,
-    PRIMARY KEY(idCarac, idRestau),
+    siret INTEGER NOT NULL,
+    PRIMARY KEY(idCarac, siret),
     FOREIGN KEY (idCarac) REFERENCES CARACTERISTIQUE (idCarac),
-    FOREIGN KEY (idRestau) REFERENCES RESTAURANT (idRestau)
+    FOREIGN KEY (siret) REFERENCES RESTAURANT (siret)
 );
 
 
@@ -91,9 +101,9 @@ CREATE TABLE TYPE_CUISINE (
 
 CREATE TABLE CUISINER (
     idTypeCuisine INTEGER NOT NULL,
-    idRestau INTEGER NOT NULL,
-    PRIMARY KEY(idTypeCuisine, idRestau),
+    siret INTEGER NOT NULL,
+    PRIMARY KEY(idTypeCuisine, siret),
     FOREIGN KEY (idTypeCuisine) REFERENCES TYPE_CUISINE (idTypeCuisine),
-    FOREIGN KEY (idRestau) REFERENCES RESTAURANT (idRestau)
+    FOREIGN KEY (siret) REFERENCES RESTAURANT (siret)
 );
 
