@@ -2,6 +2,8 @@
 
 namespace Provider;
 
+use App\Model\Restaurant;
+
 class DataLoaderJson {
     private string $filePath;
 
@@ -17,5 +19,14 @@ class DataLoaderJson {
     public function getData(): array {
         $json = file_get_contents($this->filePath);
         return json_decode($json, true) ?? [];
+    }
+
+    public function jsonToData(): bool {
+        $json = $this->getData();
+        foreach ($json as $restau) {
+            new Restaurant($restau, );
+        }
+        //var_dump($json[0]["type"]);
+        return true;
     }
 }
