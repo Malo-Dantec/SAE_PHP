@@ -53,5 +53,27 @@ class UserTest extends TestCase
         $this->assertEquals('new_user@example.com', $foundUser['email']);
     }
 
+    public function testFindByEmail()
+    {
+        $user = new User($this->db);
+        $found = $user->findByEmail('new_user@example.com');
+        $this->assertEquals($user, $found);
+
+        $notFound = $user->findByEmail('new_user@example2.com');
+        $this->assertEquals(null, $notFound);
+    }
+
+    public function testVerifyPassword()
+    {
+        $user = new User($this->db);
+        $emailFound = 'new_user@example.com';
+        $emailNotFound ='new_user@example2.com';
+        $goodPassword = 'newpassword123';
+        $wrongPassword = 'wrongPassword';
+        $this->assertTrue($user->verifyPassword($emailFound, $goodPassword));
+        $this->assertFalse($user->verifyPassword($emailNotFound, $goodPassword));
+        $this->assertFalse($user->verifyPassword($emailFound, $wrongPassword));
+    }
+
     
 }
