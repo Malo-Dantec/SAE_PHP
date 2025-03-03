@@ -58,6 +58,14 @@ CREATE TABLE RESTAURANT (
     PRIMARY KEY (idRestau)
 );
 
+CREATE TABLE FAVORIS (
+    idRestau INTEGER NOT NULL,
+    idUser INTEGER PRIMARY KEY,
+    PRIMARY KEY (idRestau, idUser),
+    FOREIGN KEY (idRestau) REFERENCES RESTAURANT (idRestau),
+    FOREIGN KEY (idUser) REFERENCES USER (idUser)
+);
+
 CREATE TABLE CARACTERISTIQUE (
     idCarac INTEGER NOT NULL,
     carcteristiqueRestau TEXT NOT NULL,
