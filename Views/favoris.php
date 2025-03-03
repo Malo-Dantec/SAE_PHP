@@ -1,4 +1,4 @@
-<?php 
+<?php
 use Model\Favoris;
 
 $idUser = $_SESSION['idUser'];
@@ -10,10 +10,6 @@ if (!$idUser) {
 
 $favoris = new Favoris($db);
 $restaurants = $favoris->get_favoris($idUser);
-
-
-
-
 
 ?>
 
