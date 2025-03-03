@@ -8,7 +8,7 @@ if (!$idUser) {
     exit;
 }
 
-$favoris = new Favoris($pdo);
+$favoris = new Favoris($db);
 $restaurants = $favoris->get_favoris($idUser);
 
 

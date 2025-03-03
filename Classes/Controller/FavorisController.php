@@ -1,32 +1,35 @@
 <?php
-namespace Controller;
 
+namespace Controller;
+require_once 'Config/Database.php';
+use Config\Database;
 use Model\Favoris;
 
 class FavorisController {
     private $favoris;
 
-    public function __construct($pdo) {
-        $this->favoris = new Favoris($pdo);
+    public function __construct($db) {
+        $this->favoris = new Favoris($db);
     }
 
     public function toggleFavoris() {
         $idUser = $_SESSION['idUser'] ?? null;
         $idRestau = $_POST['idRestau'] ?? null;
         $action = $_POST['action'] ?? null;
-        if (!$idUser || !$idRestau || !in_array($action, ['ajouter', supprimer])) {
-            header("Location: ");
+        if (!$idUser || !$idRestau || !in_array($action, ['ajouter', 'supprimer'])) {
+            header("Location: /index.php");
             exit;
         }
         if ($action == 'ajouter') {
-            $this->favoris = ajouter_favoris($idRestau, $idUser);
+            $this->favoris->ajouter_favoris($idRestau, $idUser);
         } else {
-            $this->favoris = supprimer_favoris($idRestau, $idUser);
+            $this->favoris->supprimer_favoris($idRestau, $idUser);
         }
     }
 }
 
-$controller = new FavorisController($pdo);
+$db = Database::getConnection();
+$controller = new FavorisController($db);
 $controller->toggleFavoris();
 
 

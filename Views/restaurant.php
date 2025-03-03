@@ -1,10 +1,16 @@
 <?php
+
+require_once 'config/database.php';
+require_once 'Classes/Model/Favoris.php';
+
+use Config\Database;
 use Model\Favoris;
 
+$db = Database::getConnection();
 $idUser = $_SESSION['idUser'] ?? null;
 $idRestau = $_GET['idRestau'] ?? null;
 
-$favoris = new Favoris($pdo);
+$favoris = new Favoris($db);
 $est_favoris = $favoris->est_favoris($idRestau, $idUser);
 
 
