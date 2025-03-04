@@ -35,10 +35,10 @@ CREATE TABLE DONNER (
     idAvis INTEGER NOT NULL,
     idUser INTEGER NOT NULL,
     datePoste INTEGER NOT NULL,
-    siret INTEGER NOT NULL,
-    PRIMARY KEY (idAvis, idUser, datePoste, siret),
+    id_restaurant INTEGER NOT NULL,
+    PRIMARY KEY (idAvis, idUser, datePoste, id_restaurant),
     FOREIGN KEY (idAvis) REFERENCES AVIS (idAvis),
-    FOREIGN KEY (siret) REFERENCES RESTAURANT (siret),
+    FOREIGN KEY (id_restaurant) REFERENCES RESTAURANT (id_restaurant),
     FOREIGN KEY (idUser) REFERENCES CLIENT (idUser)
 );
 
@@ -69,10 +69,10 @@ CREATE TABLE RESTAURANT (
 );
 
 CREATE TABLE FAVORIS (
-    siret INTEGER NOT NULL,
+    id_restaurant INTEGER NOT NULL,
     idUser INTEGER NOT NULL,
-    PRIMARY KEY (siret, idUser),
-    FOREIGN KEY (siret) REFERENCES RESTAURANT (siret),
+    PRIMARY KEY (id_restaurant, idUser),
+    FOREIGN KEY (id_restaurant) REFERENCES RESTAURANT (id_restaurant),
     FOREIGN KEY (idUser) REFERENCES USER (idUser)
 );
 
@@ -84,10 +84,10 @@ CREATE TABLE CARACTERISTIQUE (
 
 CREATE TABLE CARACTERISER ( 
     idCarac INTEGER NOT NULL,
-    siret INTEGER NOT NULL,
-    PRIMARY KEY(idCarac, siret),
+    id_restaurant INTEGER NOT NULL,
+    PRIMARY KEY(idCarac, id_restaurant),
     FOREIGN KEY (idCarac) REFERENCES CARACTERISTIQUE (idCarac),
-    FOREIGN KEY (siret) REFERENCES RESTAURANT (siret)
+    FOREIGN KEY (id_restaurant) REFERENCES RESTAURANT (id_restaurant)
 );
 
 
@@ -100,9 +100,9 @@ CREATE TABLE TYPE_CUISINE (
 
 CREATE TABLE CUISINER (
     idTypeCuisine INTEGER NOT NULL,
-    siret INTEGER NOT NULL,
-    PRIMARY KEY(idTypeCuisine, siret),
+    id_restaurant INTEGER NOT NULL,
+    PRIMARY KEY(idTypeCuisine, id_restaurant),
     FOREIGN KEY (idTypeCuisine) REFERENCES TYPE_CUISINE (idTypeCuisine),
-    FOREIGN KEY (siret) REFERENCES RESTAURANT (siret)
+    FOREIGN KEY (id_restaurant) REFERENCES RESTAURANT (id_restaurant)
 );
 
