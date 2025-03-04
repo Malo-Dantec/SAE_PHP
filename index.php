@@ -6,7 +6,7 @@ if (!file_exists(__DIR__ . '/routes.php')) {
 }
 
 
-require_once '/home/iut45/Etudiants/o22300799/SAE/SAE_PHP/vendor/autoload.php';
+require_once __DIR__ . '/vendor/autoload.php';
 
 
 

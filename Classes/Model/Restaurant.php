@@ -1,8 +1,7 @@
 <?php
 namespace App\Model;
 
-require_once __DIR__ . '/../Config/Database.php';
-use Config\Database;
+use App\Config\Database;
 
 use PDO;
 use Exception;
