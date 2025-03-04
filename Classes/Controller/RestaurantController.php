@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Provider\DataLoaderJson;
 use App\Model\Restaurant;
 use PDO;
 
@@ -12,14 +11,14 @@ class RestaurantController {
 
     public function __construct(PDO $db) {
         try {
-            //$loader = new DataLoaderJson(__DIR__ . "/../../Data/restaurants_orleans.json");
-            //$this->restaurants = $loader->getData();
-            //$loader->jsonToData($db);
+            //Restaurant::addJson("Data/restaurants_orleans.json", $db); // charge le json dans la bd
             $this->restaurants = Restaurant::getAll();
         } catch (Throwable $e) {
             die("Erreur dans RestaurantController : " . $e->getMessage());
         }
     }
+
+    
 
     
 

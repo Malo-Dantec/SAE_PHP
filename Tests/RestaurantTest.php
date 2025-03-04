@@ -16,8 +16,8 @@ class RestaurantTest extends TestCase
         // Charger le script SQL pour initialiser la base de données
         $this->loadDatabaseSchema();
 
-        $this->db->exec("INSERT INTO RESTAURANT (name, address) VALUES ('Restaurant 1', 'Adresse 1')");
-        $this->db->exec("INSERT INTO RESTAURANT (name, address) VALUES ('Restaurant 2', 'Adresse 2')");
+        // charge le json dans la bd
+        Restaurant::addJson("Data/restaurants_orleans.json", $this->db); 
     }
 
     /**

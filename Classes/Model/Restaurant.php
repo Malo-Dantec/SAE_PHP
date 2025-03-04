@@ -2,6 +2,7 @@
 namespace App\Model;
 
 use App\Config\Database;
+use App\Provider\DataLoaderJson;
 
 use PDO;
 use Exception;
@@ -88,6 +89,8 @@ class Restaurant {
 
 
 
+
+
     public function addToBd(): void {
         $stmt = $this->db->prepare("
             INSERT INTO RESTAURANT (
@@ -140,6 +143,11 @@ class Restaurant {
         $stmt = $pdo->prepare("SELECT * FROM RESTAURANT WHERE idRestau = ?");
         $stmt->execute([$id]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public static function addJson(string $path, PDO $db){
+        $loader = new DataLoaderJson($path);
+        $loader->jsonToData($db);
     }
 }
 ?>
