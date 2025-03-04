@@ -1,5 +1,5 @@
 <?php
-namespace Controller;
+namespace App\Controller;
 
 use Auth\Login;
 use PDO;
