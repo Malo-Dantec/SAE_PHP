@@ -43,19 +43,19 @@ CREATE TABLE DONNER (
 );
 
 CREATE TABLE RESTAURANT (
-    siret INTEGER NOT NULL,
+    id_restaurant INTEGER PRIMARY KEY AUTOINCREMENT,
+    siret Text,
     type TEXT,
     name TEXT NOT NULL,
     brand TEXT,
     opening_hours TEXT,
-    phone INTEGER UNIQUE,
+    phone Text,
     code_commune INTEGER NOT NULL,
     commune TEXT NOT NULL,
     code_region INTEGER NOT NULL,
     region TEXT NOT NULL,
     code_departement INTEGER NOT NULL,
     departement TEXT NOT NULL,
-    osm_edit TEXT,
     longitude TEXT,
     latitude TEXT,
     osm_id TEXT,
@@ -66,7 +66,6 @@ CREATE TABLE RESTAURANT (
     com_insee TEXT,
     osm_edit TEXT,
     operator TEXT
-    PRIMARY KEY (siret)
 );
 
 CREATE TABLE FAVORIS (

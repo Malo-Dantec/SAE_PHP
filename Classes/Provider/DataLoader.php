@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Provider;
+namespace App\Provider;
 
 require_once '/DataLoaderInterface.php';
 use Provider\DataLoaderInterface;

@@ -1,9 +1,12 @@
 <?php
-require_once './Classes/Controller/RestaurantController.php';
+declare(strict_types=1);
 
-use Controller\RestaurantController;
+use App\Controller\RestaurantController;
+use App\Config\Database;
 
-$controller = new RestaurantController();
+
+$db = Database::getConnection();
+$controller = new RestaurantController($db);
 
 if (isset($_GET['action']) && $_GET['action'] === 'show' && isset($_GET['osm_id'])) {
     $controller->show($_GET['osm_id']);
