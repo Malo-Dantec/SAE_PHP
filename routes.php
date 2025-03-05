@@ -5,8 +5,8 @@ use Controller\RestaurantController;
 
 $controller = new RestaurantController();
 
-if (isset($_GET['action']) && $_GET['action'] === 'show' && isset($_GET['osm_id'])) {
-    $controller->show($_GET['osm_id']);
+if (isset($_GET['action']) && $_GET['action'] === 'show' && isset($_GET['idRestau'])) {
+    $controller->show($_GET['idRestau']);
 } else {
     $controller->index();
 }

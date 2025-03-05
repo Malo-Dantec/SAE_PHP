@@ -16,9 +16,9 @@
         <ul>
             <?php foreach ($restaurants as $restaurant): ?>
                 <li>
-                    <a href="index.php?action=show&osm_id=<?= urlencode($restaurant['osm_id']) ?>">
-                        <?= htmlspecialchars($restaurant['name'] ?? 'Nom inconnu') ?>
-                    </a> (<?= htmlspecialchars($restaurant['type'] ?? 'Type inconnu') ?>)
+                    <a href="index.php?action=show&idRestau=<?= urlencode($restaurant['idRestau']) ?>">
+                        <?= htmlspecialchars($restaurant['nomRestau'] ?? 'Nom inconnu') ?>
+                    </a> (<?= htmlspecialchars($restaurant['typeRestau'] ?? 'Type inconnu') ?>)
                 </li>
             <?php endforeach; ?>
         </ul>

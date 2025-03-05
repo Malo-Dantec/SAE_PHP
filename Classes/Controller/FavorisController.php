@@ -1,7 +1,7 @@
 <?php
 
 namespace Controller;
-require_once 'Config/Database.php';
+require_once 'config/database.php';
 use Config\Database;
 use Model\Favoris;
 
@@ -13,6 +13,7 @@ class FavorisController {
     }
 
     public function toggleFavoris() {
+        var_dump($_POST);
         $idUser = $_SESSION['idUser'] ?? null;
         $idRestau = $_POST['idRestau'] ?? null;
         $action = $_POST['action'] ?? null;

@@ -38,8 +38,9 @@ class Login {
                 return false;
             }
 
-            if ($this->authenticate($this->email, $this->password)) {
-                $_SESSION['email'] = $this->email; // Stocke l'email en session
+            $userId = $this->authenticate($this->email, $this->password);
+            if ($userId !== null) {
+                $_SESSION['idUser'] = $userId; // Stocke l'ID utilisateur en session
                 echo "Connexion réussie.";
                 return true;
             } else {
@@ -51,7 +52,7 @@ class Login {
     }
 
     // Méthode pour authentifier l'utilisateur avec la base de données
-    private function authenticate(string $email, string $password): bool {
+    private function authenticate(string $email, string $password): ?int {
         return $this->userModel->verifyPassword($email, $password);
     }
 }

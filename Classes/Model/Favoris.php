@@ -30,7 +30,7 @@ class Favoris {
     }
 
     public function get_favoris($idUser) {
-        $sql = "select R.idRestau, R.nom from RESTAURANT R join FAVORIS F on R.idRestau = F.idRestau where F.idUser = :idUser";
+        $sql = "select R.idRestau, R.nomRestau from RESTAURANT R join FAVORIS F on R.idRestau = F.idRestau where F.idUser = :idUser";
         $stmt = $this->db->prepare($sql);
         $stmt->execute(['idUser' => $idUser]);
         return $stmt->fetchAll();
