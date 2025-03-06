@@ -10,8 +10,9 @@ use Throwable;
 
 class RestaurantController {
     private array $restaurants;
+    private PDO $db;
 
-    public function __construct() {
+    public function __construct(PDO $db) {
         try {
             // Récupérer tous les restaurants depuis la base de données
             $this->restaurants = Restaurant::getAll();

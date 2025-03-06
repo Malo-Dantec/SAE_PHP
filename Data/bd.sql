@@ -5,6 +5,7 @@ DROP TABLE IF EXISTS CUISINER;
 DROP TABLE IF EXISTS AVIS;
 DROP TABLE IF EXISTS CARACTERISTIQUE;
 DROP TABLE IF EXISTS TYPE_CUISINE;
+DROP TABLE IF EXISTS FAVORIS;
 DROP TABLE IF EXISTS RESTAURANT;
 DROP TABLE IF EXISTS USER;
 DROP TABLE IF EXISTS ADMIN;
@@ -33,10 +34,10 @@ CREATE TABLE DONNER (
     idAvis INTEGER NOT NULL,
     idUser INTEGER NOT NULL,
     datePoste INTEGER NOT NULL,
-    idRestau INTEGER NOT NULL,
-    PRIMARY KEY (idAvis, idUser, datePoste, idRestau),
+    id_restaurant INTEGER NOT NULL,
+    PRIMARY KEY (idAvis, idUser, datePoste, id_restaurant),
     FOREIGN KEY (idAvis) REFERENCES AVIS (idAvis),
-    FOREIGN KEY (idRestau) REFERENCES RESTAURANT (idRestau),
+    FOREIGN KEY (id_restaurant) REFERENCES RESTAURANT (id_restaurant),
     FOREIGN KEY (idUser) REFERENCES CLIENT (idUser)
 );
 
@@ -54,7 +55,7 @@ CREATE TABLE RESTAURANT (
     codeDepartement INTEGER NOT NULL,
     nomDepartement TEXT NOT NULL,
     osm_edit TEXT,
-    PRIMARY KEY (idRestau)
+    operator TEXT
 );
 
 CREATE TABLE FAVORIS (
@@ -73,10 +74,10 @@ CREATE TABLE CARACTERISTIQUE (
 
 CREATE TABLE CARACTERISER ( 
     idCarac INTEGER NOT NULL,
-    idRestau INTEGER NOT NULL,
-    PRIMARY KEY(idCarac, idRestau),
+    id_restaurant INTEGER NOT NULL,
+    PRIMARY KEY(idCarac, id_restaurant),
     FOREIGN KEY (idCarac) REFERENCES CARACTERISTIQUE (idCarac),
-    FOREIGN KEY (idRestau) REFERENCES RESTAURANT (idRestau)
+    FOREIGN KEY (id_restaurant) REFERENCES RESTAURANT (id_restaurant)
 );
 
 
@@ -89,9 +90,9 @@ CREATE TABLE TYPE_CUISINE (
 
 CREATE TABLE CUISINER (
     idTypeCuisine INTEGER NOT NULL,
-    idRestau INTEGER NOT NULL,
-    PRIMARY KEY(idTypeCuisine, idRestau),
+    id_restaurant INTEGER NOT NULL,
+    PRIMARY KEY(idTypeCuisine, id_restaurant),
     FOREIGN KEY (idTypeCuisine) REFERENCES TYPE_CUISINE (idTypeCuisine),
-    FOREIGN KEY (idRestau) REFERENCES RESTAURANT (idRestau)
+    FOREIGN KEY (id_restaurant) REFERENCES RESTAURANT (id_restaurant)
 );
 
