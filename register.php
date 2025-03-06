@@ -13,6 +13,9 @@ $db = Database::getConnection();
 // Instancier le contrôleur d'inscription
 $controller = new RegisterController($db);
 
+echo "<a href='index.php'>Accueil</a>";
+echo "<a href='login.php'>Se connecter</a>";
+
 // Afficher le formulaire ou traiter les données envoyées
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $controller->processRegister();
@@ -20,5 +23,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $controller->showRegisterForm();
 }
 
-echo "<a href='index.php'>Accueil</a>";
-echo "<a href='login.php'>Se connecter</a>";
+?>

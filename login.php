@@ -11,6 +11,8 @@ $db = Database::getConnection();
 
 $controller = new LoginController($db);
 
+echo "<a href='index.php'>Accueil</a>";
+echo "<a href='register.php'>S'inscire</a>";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $controller->processLogin();
@@ -18,6 +20,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $controller->showLoginForm();
 }
 
-echo "<a href='index.php'>Accueil</a>";
-echo "<a href='register.php'>S'inscire</a>";
+
 ?>
