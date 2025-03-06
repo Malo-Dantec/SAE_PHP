@@ -46,7 +46,7 @@ CREATE TABLE RESTAURANT (
     nomRestau TEXT NOT NULL,
     heureOuverture TEXT,
     siret INTEGER,
-    numTel INTEGER UNIQUE,
+    numTel INTEGER,
     codeCommune INTEGER NOT NULL,
     nomCommune TEXT NOT NULL,
     codeRegion INTEGER NOT NULL,
