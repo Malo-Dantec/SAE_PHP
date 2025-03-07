@@ -14,11 +14,11 @@ class Restaurant {
     private ?string $typeRestau;  
     private string $nomRestau; 
     private ?string $heureOuverture; 
-    private ?int $siret; 
-    private ?int $numTel; 
+    private ?string $siret; 
+    private ?string $numTel; 
     private int $codeCommune; 
     private string $nomCommune;
-    private int $codeRegion; 
+    private ?int $codeRegion; 
     private string $nomRegion;
     private int $codeDepartement; 
     private string $nomDepartement; 
@@ -30,22 +30,20 @@ class Restaurant {
 
     public function __construct(
         PDO $db,
-        int $idRestau,
         ?string $typeRestau,  
         string $nomRestau, 
         ?string $heureOuverture, 
-        ?int $siret, 
-        ?int $numTel, 
+        ?string $siret, 
+        ?string $numTel, 
         int $codeCommune, 
         string $nomCommune,
-        int $codeRegion, 
+        ?int $codeRegion, 
         string $nomRegion,
         int $codeDepartement, 
         string $nomDepartement, 
         string $osm_edit
     ) {
         $this->db = $db;
-        $this->idRestau = $idRestau;
         $this->typeRestau = $typeRestau;  
         $this->nomRestau = $nomRestau; 
         $this->heureOuverture = $heureOuverture; 
@@ -68,16 +66,15 @@ class Restaurant {
     public function addToBd(): void {
         $stmt = $this->db->prepare("
             INSERT INTO RESTAURANT (
-                idRestau, typeRestau, nomRestau, heureOuverture, siret, numTel, codeCommune, nomCommune,
+                typeRestau, nomRestau, heureOuverture, siret, numTel, codeCommune, nomCommune,
                 codeRegion, nomRegion,  codeDepartement, nomDepartement, osm_edit
             ) VALUES (
-                :idRestau, :typeRestau, :nomRestau, :heureOuverture, :siret, :numTel, :codeCommune, :nomCommune,
+                :typeRestau, :nomRestau, :heureOuverture, :siret, :numTel, :codeCommune, :nomCommune,
                 :codeRegion, :nomRegion,  :codeDepartement, :nomDepartement, :osm_edit
             )
         ");
     
         $stmt->execute([
-            ':idRestau' => $this->idRestau,
             ':typeRestau' => $this->typeRestau, 
             ':nomRestau' => $this->nomRestau, 
             ':heureOuverture' => $this->heureOuverture, 
