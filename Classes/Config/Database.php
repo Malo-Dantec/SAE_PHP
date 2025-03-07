@@ -9,11 +9,11 @@ use PDOException;
 
 class Database {
     private static ?PDO $pdo = null; // Utilisation d'une propriété statique pour stocker la connexion
-
-    public static function getConnection($path): PDO {
+    public static string $path = "";
+    public static function getConnection(): PDO {
         if (self::$pdo === null) { // Vérifie si la connexion existe déjà
             try {
-                self::$pdo = new PDO('sqlite:' . $path); 
+                self::$pdo = new PDO('sqlite:' . Database::$path); 
                 self::$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             } catch (PDOException $e) {
                 die("Erreur de connexion à la base de données : " . $e->getMessage());

@@ -12,11 +12,12 @@ if ($argc < 2) {
 }
 
 // Récupérez l'argument passé (le chemin)
-$path = $argv[1]; // $argv[1] contient le premier argument passé
+Database::$path = $argv[1]; // $argv[1] contient le premier argument passé
+
 
 // Connexion à la base de données
-$db = Database::getConnection($path);
-
+$db = Database::getConnection();
+var_dump(Database::$path);
 // Charger le fichier JSON
 $jsonFile = 'Data/restaurants_orleans.json';
 $jsonData = file_get_contents($jsonFile);

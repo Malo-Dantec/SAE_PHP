@@ -1,7 +1,7 @@
 <?php
 require_once './Classes/Controller/RestaurantController.php';
 
-use Controller\RestaurantController;
+use Classes\Controller\RestaurantController;
 
 $controller = new RestaurantController();
 

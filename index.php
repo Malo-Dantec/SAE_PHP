@@ -6,8 +6,12 @@ if (!file_exists(__DIR__ . '/routes.php')) {
 }
 require_once __DIR__ . '/routes.php';
 
-require_once 'Classes/Autoloader.php';
-Autoloader::register();
+require_once __DIR__ . '/vendor/autoload.php';
+
+use Classes\Config\Database;
+
+Database::$path = "Data/database.db";
+
 
 use Auth\Login;
 
