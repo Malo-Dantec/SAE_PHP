@@ -3,8 +3,8 @@ session_start();
 require_once '../config/database.php';
 require_once '../Classes/Model/Favoris.php';
 
-use Model\Favoris;
-use Config\Database;
+use Classes\Model\Favoris;
+use Classes\Config\Database;
 
 $db = Database::getConnection();
 $idUser = $_SESSION['idUser'];
