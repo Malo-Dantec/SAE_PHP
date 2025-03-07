@@ -2,7 +2,9 @@
 
 use PHPUnit\Framework\TestCase;
 use Classes\Model\Restaurant;
+use Classes\Config\Database;
 
+Database::$path = "Tests/Data/test_db.db";
 
 class RestaurantTest extends TestCase
 {

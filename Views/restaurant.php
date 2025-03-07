@@ -2,8 +2,8 @@
 require_once 'config/database.php';
 require_once 'Classes/Model/Favoris.php';
 
-use Config\Database;
-use Model\Favoris;
+use Classes\Config\Database;
+use Classes\Model\Favoris;
 
 $db = Database::getConnection();
 $idUser = $_SESSION['idUser'] ?? null;
