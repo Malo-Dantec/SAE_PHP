@@ -109,5 +109,18 @@ class Restaurant {
         $loader = new DataLoaderJson($path);
         $loader->jsonToData($db);
     }
+
+    public static function searchByNom($search):array{
+        $results = [];
+        if ($search !== "") {
+            foreach (Restaurant::getAll() as $restaurant) {
+                if (strpos(strtolower($restaurant["nomRestau"]), strtolower($search)) !== false) {
+                    $results[] = $restaurant;
+                }
+        
+            }
+        }
+        return  $results;
+    }
 }
 ?>

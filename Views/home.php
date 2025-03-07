@@ -13,6 +13,10 @@
     ?>
     <main>
         <h1>Liste des Restaurants</h1>
+        <form method="GET">
+            <input type="text" name="search" placeholder="Entrez un nom..." value="<?php echo htmlspecialchars($search); ?>">
+            <button type="submit">Rechercher</button>
+        </form>
         <ul>
             <?php foreach ($restaurants as $restaurant): ?>
                 <li>
