@@ -1,11 +1,10 @@
 <?php
-require_once 'config/database.php';
-require_once 'Classes/Controller/RegisterController.php';
-require_once 'Classes/Model/User.php';
-require_once 'Classes/Auth/Register.php';
 
-use Config\Database;
-use Controller\RegisterController;
+require_once __DIR__ . '/../vendor/autoload.php';
+
+
+use Classes\Config\Database;
+use Classes\Controller\RegisterController;
 
 // Obtenir une connexion PDO depuis config/database.php
 $db = Database::getConnection();
@@ -20,5 +19,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $controller->showRegisterForm();
 }
 
-echo "<a href='index.php'>Accueil</a>";
+echo "<a href='/index.php'>Accueil</a>";
 echo "<a href='login.php'>Se connecter</a>";
+?>

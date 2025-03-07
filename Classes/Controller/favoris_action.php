@@ -1,10 +1,8 @@
 <?php
 session_start();
-require_once '../config/database.php';
-require_once '../Classes/Model/Favoris.php';
 
-use Model\Favoris;
-use Config\Database;
+use Classes\Model\Favoris;
+use Classes\Config\Database;
 
 // Vérifier si l'utilisateur est connecté
 $idUser = $_SESSION['idUser'] ?? null;

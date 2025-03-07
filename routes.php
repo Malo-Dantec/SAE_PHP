@@ -1,5 +1,5 @@
 <?php
-require_once './Classes/Controller/RestaurantController.php';
+#require_once './Classes/Controller/RestaurantController.php';
 
 use Classes\Controller\RestaurantController;
 

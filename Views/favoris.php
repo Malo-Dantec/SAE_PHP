@@ -1,7 +1,8 @@
 <?php
+
+require_once __DIR__ . '/../vendor/autoload.php';
+
 session_start();
-require_once '../config/database.php';
-require_once '../Classes/Model/Favoris.php';
 
 use Classes\Model\Favoris;
 use Classes\Config\Database;
