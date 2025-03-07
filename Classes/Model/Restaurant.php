@@ -122,5 +122,16 @@ class Restaurant {
         }
         return  $results;
     }
+
+    public static function filterType($restau, $selectedTypes):array{
+        if (!empty($selectedTypes)) {
+            $restaurants = array_filter($restau, function ($restau) use ($selectedTypes) {
+                return in_array($restau['typeRestau'], $selectedTypes);
+            });
+            return $restaurants;
+            
+        }
+        return $restau;
+    }
 }
 ?>

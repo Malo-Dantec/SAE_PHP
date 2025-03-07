@@ -14,16 +14,16 @@ class RestaurantController {
 
     public function __construct() {
         try {
-            // Récupérer tous les restaurants depuis la base de données
-            //$this->restaurants = Restaurant::getAll();
 
-            // Récupérer la recherche de l'utilisateur
+            // Récupérer la recherche et les types sélectionnés
             $search = isset($_GET['search']) ? strtolower(trim($_GET['search'])) : "";
-            var_dump($search);
-            // Si une recherche est effectuée, filtrer les restaurants
+            $selectedTypes = isset($_GET['types']) ? $_GET['types'] : [];
+
+            // Récupérer les restaurants selon la recherche
             $this->restaurants = ($search !== "") ? Restaurant::searchByNom($search) : Restaurant::getAll();
 
-
+            // Appliquer le filtre par type
+            $this->restaurants = Restaurant::filterType($this->restaurants, $selectedTypes);
 
             
         } catch (Throwable $e) {
