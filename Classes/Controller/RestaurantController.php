@@ -7,13 +7,25 @@ use Classes\Model\Restaurant;
 use Classes\Config\Database;
 use Throwable;
 
+
+
 class RestaurantController {
     private array $restaurants;
 
     public function __construct() {
         try {
-            // Récupérer tous les restaurants depuis la base de données
-            $this->restaurants = Restaurant::getAll();
+
+            // Récupérer la recherche et les types sélectionnés
+            $search = isset($_GET['search']) ? strtolower(trim($_GET['search'])) : "";
+            $selectedTypes = isset($_GET['types']) ? $_GET['types'] : [];
+
+            // Récupérer les restaurants selon la recherche
+            $this->restaurants = ($search !== "") ? Restaurant::searchByNom($search) : Restaurant::getAll();
+
+            // Appliquer le filtre par type
+            $this->restaurants = Restaurant::filterType($this->restaurants, $selectedTypes);
+
+            
         } catch (Throwable $e) {
             die("❌ Erreur dans RestaurantController : " . $e->getMessage());
         }

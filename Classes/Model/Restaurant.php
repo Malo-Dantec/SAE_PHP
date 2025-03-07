@@ -109,5 +109,29 @@ class Restaurant {
         $loader = new DataLoaderJson($path);
         $loader->jsonToData($db);
     }
+
+    public static function searchByNom($search):array{
+        $results = [];
+        if ($search !== "") {
+            foreach (Restaurant::getAll() as $restaurant) {
+                if (strpos(strtolower($restaurant["nomRestau"]), strtolower($search)) !== false) {
+                    $results[] = $restaurant;
+                }
+        
+            }
+        }
+        return  $results;
+    }
+
+    public static function filterType($restau, $selectedTypes):array{
+        if (!empty($selectedTypes)) {
+            $restaurants = array_filter($restau, function ($restau) use ($selectedTypes) {
+                return in_array($restau['typeRestau'], $selectedTypes);
+            });
+            return $restaurants;
+            
+        }
+        return $restau;
+    }
 }
 ?>
