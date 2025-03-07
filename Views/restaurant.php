@@ -1,6 +1,4 @@
 <?php
-require_once 'config/database.php';
-require_once 'Classes/Model/Favoris.php';
 
 use Classes\Config\Database;
 use Classes\Model\Favoris;
@@ -31,7 +29,7 @@ $est_favoris = $idUser ? $favoris->est_favoris($idRestau, $idUser) : false;
     <?php include 'header.php'; ?>
     <main>
         <h1><?= htmlspecialchars($restaurant['nomRestau'] ?? 'Nom inconnu') ?></h1>
-        <form method="POST" action="Controller/favoris_action.php">
+        <form method="POST" action="Classes/Controller/favoris_action.php">
             <input type="hidden" name="idRestau" value="<?= htmlspecialchars($restaurant['idRestau'] ?? '') ?>">
             <button type="submit" name="action" value="<?= $est_favoris ? 'supprimer' : 'ajouter' ?>">
                 <?= $est_favoris ? "Retirer des favoris" : "Ajouter aux favoris" ?>
