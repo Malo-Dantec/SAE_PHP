@@ -20,5 +20,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 echo "<a href='/index.php'>Accueil</a>";
-echo "<a href='login.php'>Se connecter</a>";
+echo "<a href='/Views/login.php'>Se connecter</a>";
 ?>

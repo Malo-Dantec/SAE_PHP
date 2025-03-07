@@ -29,6 +29,7 @@ class User {
      * Trouver un utilisateur par email.
      */
     public function findByEmail(string $email): ?array {
+        var_dump($this->db);
         $stmt = $this->db->prepare('SELECT * FROM USER WHERE email = :email');
         $stmt->execute(['email' => $email]);
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
