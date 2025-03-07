@@ -24,31 +24,22 @@ class DataLoaderJson {
 
     public function jsonToData(PDO $db): bool {
         $json = $this->getData();
+        
         foreach ($json as $restau) {
             $newRestau = new Restaurant(
                 $db,
-                $restau["siret"],
-                $restau["type"] ?? null,
-                $restau["name"],
-                $restau["brand"] ?? null,
-                $restau["opening_hours"] ?? null,
-                $restau["phone"] ?? null,
-                $restau["code_commune"],
-                $restau["commune"],
-                $restau["code_region"],
-                $restau["region"],
-                $restau["code_departement"],
-                $restau["departement"],
-                $restau["longitude"] ?? null,
-                $restau["latitude"] ?? null,
-                $restau["osm_id"] ?? null,
-                $restau["wikidata"] ?? null,
-                $restau["brand_wikidata"] ?? null,
-                $restau["website"] ?? null,
-                $restau["facebook"] ?? null,
-                $restau["com_insee"] ?? null,
-                $restau["osm_edit"] ?? null,
-                $restau["operator"] ?? null
+                $restau['type'],
+                $restau['name'],
+                $restau['opening_hours'],
+                $restau['siret'],
+                $restau['phone'],
+                $restau['code_commune'],
+                $restau['commune'],
+                $restau[''],
+                $restau['code_region'],
+                $restau['code_departement'],
+                $restau['departement'],
+                $restau['osm_edit']
             );
             $newRestau->addToBd();
         }

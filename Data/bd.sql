@@ -41,20 +41,19 @@ CREATE TABLE DONNER (
 );
 
 CREATE TABLE RESTAURANT (
-    idRestau INTEGER NOT NULL,
+    idRestau INTEGER PRIMARY KEY AUTOINCREMENT,
     typeRestau TEXT,
     nomRestau TEXT NOT NULL,
     heureOuverture TEXT,
-    siret INTEGER,
-    numTel INTEGER,
+    siret TEXT,
+    numTel TEXT,
     codeCommune INTEGER NOT NULL,
     nomCommune TEXT NOT NULL,
-    codeRegion INTEGER NOT NULL,
+    codeRegion INTEGER,
     nomRegion TEXT NOT NULL,
     codeDepartement INTEGER NOT NULL,
     nomDepartement TEXT NOT NULL,
-    osm_edit TEXT,
-    PRIMARY KEY (idRestau)
+    osm_edit TEXT
 );
 
 CREATE TABLE FAVORIS (

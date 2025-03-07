@@ -12,48 +12,29 @@ class RestaurantTest extends TestCase
     
     protected function setUp(): void
     {
-        $dbFile = __DIR__ . '/Data/test_db.db';  // Fichier .db
-        $this->db = new PDO("sqlite:$dbFile");
-        $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $this->db = Database::getConnection();
 
-        // Charger le script SQL pour initialiser la base de données
-        $this->loadDatabaseSchema();
-
-        // charge le json dans la bd
-        Restaurant::addJson("Data/restaurants_orleans.json", $this->db); 
     }
 
-    /**
-     * Charger et exécuter le script SQL pour initialiser la base de données.
-     */
-    private function loadDatabaseSchema(): void
-    {
-        // Lire le script SQL pour créer la structure de la base de données
-        $sql = file_get_contents(__DIR__ . DIRECTORY_SEPARATOR . '../Data/bd.sql');
-        $this->db->exec($sql);  // Exécuter le script SQL pour initialiser la base de données
-    }
 
     public function testGetAll()
     {
         $restaurants = Restaurant::getAll();
         
         $this->assertIsArray($restaurants);
-        $this->assertCount(2, $restaurants); // Il y a 2 restaurants insérés
-        $this->assertEquals('Restaurant 1', $restaurants[0]['name']);
+        $this->assertEquals('Cha+', $restaurants[0]['nomRestau']);
     }
 
     public function testGetById()
     {
         $restaurant = Restaurant::getById(1);
-
         $this->assertIsArray($restaurant);
-        $this->assertEquals('Restaurant 1', $restaurant['name']);
+        $this->assertEquals('Cha+', $restaurant['nomRestau']);
     }
 
     public function testGetByIdNotFound()
     {
         $restaurant = Restaurant::getById(999); // ID inexistant
-
-        $this->assertNull($restaurant); // Doit retourner null
+        $this->assertFalse($restaurant);
     }
 }

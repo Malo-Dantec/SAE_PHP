@@ -11,7 +11,6 @@ class RestaurantController {
     private array $restaurants;
 
     public function __construct() {
-        var_dump("test");
         try {
             // Récupérer tous les restaurants depuis la base de données
             $this->restaurants = Restaurant::getAll();
