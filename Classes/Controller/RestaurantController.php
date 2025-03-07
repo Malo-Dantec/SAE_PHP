@@ -1,11 +1,10 @@
 <?php
 
-namespace Controller;
-require_once __DIR__ . '/../Model/Restaurant.php';
-require_once __DIR__ . '/../../config/database.php';
+namespace Classes\Controller;
 
-use Model\Restaurant;
-use Config\Database;
+
+use Classes\Model\Restaurant;
+use Classes\Config\Database;
 use Throwable;
 
 class RestaurantController {

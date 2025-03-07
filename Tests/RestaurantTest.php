@@ -1,7 +1,8 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
-use Model\Restaurant;
+use Classes\Model\Restaurant;
+
 
 class RestaurantTest extends TestCase
 {

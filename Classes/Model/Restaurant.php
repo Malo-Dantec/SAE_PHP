@@ -1,8 +1,8 @@
 <?php
-namespace App\Model;
+namespace Classes\Model;
 
-use Config\Database;
-use Provider\DataLoaderJson;
+use Classes\Config\Database;
+use Classes\Provider\DataLoaderJson;
 
 use PDO;
 use Exception;
