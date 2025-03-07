@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Provider;
 
-require_once '/DataLoaderInterface.php';
+
 use Provider\DataLoaderInterface;
 
 abstract class DataLoader implements DataLoaderInterface {
