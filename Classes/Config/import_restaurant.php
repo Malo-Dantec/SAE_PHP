@@ -1,10 +1,21 @@
 <?php
-require_once 'config/database.php';
 
-use Config\Database;
+
+
+namespace Classes\Config;
+
+require_once __DIR__ . '/../../vendor/autoload.php';
+use Classes\Config\Database;
+
+if ($argc < 2) {
+    die("Le chemin de la base de données (path) doit être spécifié en argument.\n");
+}
+
+// Récupérez l'argument passé (le chemin)
+$path = $argv[1]; // $argv[1] contient le premier argument passé
 
 // Connexion à la base de données
-$db = Database::getConnection();
+$db = Database::getConnection($path);
 
 // Charger le fichier JSON
 $jsonFile = 'Data/restaurants_orleans.json';
@@ -43,7 +54,7 @@ foreach ($restaurants as $resto) {
             ':nomDepartement' => $resto['departement'] ?? null,
             ':osm_edit'       => $resto['osm_edit'] ?? null
         ]);
-    } catch (PDOException $e) {
+    } catch (\PDOException $e) {
         echo "Erreur lors de l'insertion de '{$resto['name']}' : " . $e->getMessage() . "\n";
     }
 }

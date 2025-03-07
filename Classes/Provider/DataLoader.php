@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace Classes\Provider;
 
 
-use Provider\DataLoaderInterface;
+use Classes\Provider\DataLoaderInterface;
 
 abstract class DataLoader implements DataLoaderInterface {
     protected array $data = [];

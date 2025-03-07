@@ -94,11 +94,11 @@ class Restaurant {
     public function addToBd(): void {
         $stmt = $this->db->prepare("
             INSERT INTO RESTAURANT (
-                siret, type, name, brand, opening_hours, phone, code_commune, commune,
+                siret, typeRestau, name, brand, opening_hours, phone, code_commune, commune,
                 code_region, region, code_departement, departement, longitude, latitude,
                 osm_id, wikidata, brand_wikidata, website, facebook, com_insee, osm_edit, operator
             ) VALUES (
-                :siret, :type, :name, :brand, :opening_hours, :phone, :code_commune, :commune,
+                :siret, :typeRestau, :name, :brand, :opening_hours, :phone, :code_commune, :commune,
                 :code_region, :region, :code_departement, :departement, :longitude, :latitude,
                 :osm_id, :wikidata, :brand_wikidata, :website, :facebook, :com_insee, :osm_edit, :operator
             )
@@ -106,7 +106,7 @@ class Restaurant {
     
         $stmt->execute([
             ':siret' => $this->siret,
-            ':type' => $this->type,
+            ':typeRestau' => $this->type,
             ':name' => $this->name,
             ':brand' => $this->brand,
             ':opening_hours' => $this->opening_hours,
