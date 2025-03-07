@@ -1,2 +1,4 @@
 config/database.db
 Data/database.db
+Tests/Data/test_db.db
+vendor

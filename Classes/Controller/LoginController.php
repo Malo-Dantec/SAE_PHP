@@ -1,7 +1,7 @@
 <?php
-namespace Controller;
+namespace Classes\Controller;
 
-use Auth\Login;
+use Classes\Auth\Login;
 use PDO;
 
 class LoginController {

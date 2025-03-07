@@ -1,7 +1,7 @@
 <?php
-namespace Auth;
+namespace Classes\Auth;
 
-use Model\User;
+use Classes\Model\User;
 use PDO;
 
 class Login {

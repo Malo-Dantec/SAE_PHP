@@ -1,9 +1,9 @@
 <?php
 
-namespace Controller;
-require_once 'config/database.php';
-use Config\Database;
-use Model\Favoris;
+namespace Classes\Controller;
+
+use Classes\Config\Database;
+use Classes\Model\Favoris;
 
 class FavorisController {
     private $favoris;

@@ -1,7 +1,7 @@
 <?php
-namespace Controller;
+namespace Classes\Controller;
 
-use Auth\Register;
+use Classes\Auth\Register;
 use PDO;
 
 class RegisterController {
