@@ -37,7 +37,7 @@ CREATE TABLE DONNER (
     PRIMARY KEY (idAvis, idUser, datePoste, idRestau),
     FOREIGN KEY (idAvis) REFERENCES AVIS (idAvis),
     FOREIGN KEY (idRestau) REFERENCES RESTAURANT (idRestau),
-    FOREIGN KEY (idUser) REFERENCES CLIENT (idUser)
+    FOREIGN KEY (idUser) REFERENCES USER (idUser)
 );
 
 CREATE TABLE RESTAURANT (
