@@ -5,8 +5,6 @@ use Classes\Config\Database;
 use PHPUnit\Framework\TestCase;
 use Classes\Provider\DataLoaderJson;
 use Classes\Model\Restaurant;
-use PDO;
-use PDOStatement;
 use function PHPUnit\Framework\assertEquals;
 
 class DataLoaderJsonTest extends TestCase {
