@@ -23,27 +23,52 @@ if (!$user) {
 
 $email = htmlspecialchars($user['email'], ENT_QUOTES, 'UTF-8');
 
+if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['supprimerAvis'])) {
+    $idAvis = $_POST['idAvis'] ?? null;
+
+    if ($idAvis) {
+        // Supprimer l'avis dans la table DONNER (car FK)
+        $stmtDelete = $db->prepare("DELETE FROM DONNER WHERE idAvis = ? AND idUser = ?");
+        $stmtDelete->execute([$idAvis, $idUser]);
+
+        // Supprimer l'avis dans la table AVIS (seulement si plus utilisé)
+        $stmtCheck = $db->prepare("SELECT COUNT(*) FROM DONNER WHERE idAvis = ?");
+        $stmtCheck->execute([$idAvis]);
+        $count = $stmtCheck->fetchColumn();
+
+        if ($count == 0) {
+            $stmtDeleteAvis = $db->prepare("DELETE FROM AVIS WHERE idAvis = ?");
+            $stmtDeleteAvis->execute([$idAvis]);
+        }
+
+        // Recharger la page pour voir les changements
+        header("Location: profil.php?pageAvis=$pageAvis");
+        exit;
+    }
+}
+
+
 $message = "";
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $oldPassword = $_POST['ancien_mdp'] ?? '';
-    $newPassword = $_POST['nouveau_mdp'] ?? '';
-    $confirmPassword = $_POST['meme_mdp'] ?? '';
+    $ancienMDP = $_POST['ancien_mdp'] ?? '';
+    $nouveauMDP = $_POST['nouveau_mdp'] ?? '';
+    $memeMDP = $_POST['meme_mdp'] ?? '';
 
-    if (empty($oldPassword) || empty($newPassword) || empty($confirmPassword)) {
+    if (empty($ancienMDP) || empty($nouveauMDP) || empty($memeMDP)) {
         $message = "Tous les champs sont obligatoires.";
-    } elseif ($newPassword !== $confirmPassword) {
+    } elseif ($nouveauMDP !== $memeMDP) {
         $message = "Les nouveaux mots de passe ne correspondent pas.";
     } else {
-        // Vérifier l'ancien mot de passe
+        // Vérifif de l'ancien mdp
         $stmt = $db->prepare("SELECT password FROM USER WHERE idUser = ?");
         $stmt->execute([$idUser]);
         $userData = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        if (!password_verify($oldPassword, $userData['password'])) {
+        if (!password_verify($ancienMDP, $userData['password'])) {
             $message = "Ancien mot de passe incorrect.";
         } else {
-            // Mettre à jour le mot de passe
-            $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
+            // Maj du mot de passe
+            $hashedPassword = password_hash($nouveauMDP, PASSWORD_DEFAULT);
             $updateStmt = $db->prepare("UPDATE USER SET password = ? WHERE idUser = ?");
             if ($updateStmt->execute([$hashedPassword, $idUser])) {
                 $message = "Mot de passe mis à jour avec succès.";
@@ -53,6 +78,33 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         }
     }
 }
+
+// Nombre d'avis par page
+$avisParPage = 3;
+$pageAvis = isset($_GET['pageAvis']) ? max(1, intval($_GET['pageAvis'])) : 1;
+$offsetAvis = ($pageAvis - 1) * $avisParPage;
+
+$sqlAvis = "SELECT a.idAvis, a.note, a.texteAvis, d.datePoste, r.nomRestau
+            FROM AVIS a
+            JOIN DONNER d ON a.idAvis = d.idAvis
+            JOIN RESTAURANT r ON d.idRestau = r.idRestau
+            WHERE d.idUser = ?
+            ORDER BY d.datePoste DESC
+            LIMIT $avisParPage OFFSET $offsetAvis";
+
+$stmtAvis = $db->prepare($sqlAvis);
+$stmtAvis->execute([$idUser]);
+$avisList = $stmtAvis->fetchAll(PDO::FETCH_ASSOC);
+
+// Pagination
+$sqlCountAvis = "SELECT COUNT(*) FROM AVIS a
+                 JOIN DONNER d ON a.idAvis = d.idAvis
+                 WHERE d.idUser = ?";
+
+$stmtCountAvis = $db->prepare($sqlCountAvis);
+$stmtCountAvis->execute([$idUser]);
+$totalAvis = $stmtCountAvis->fetchColumn();
+$totalPagesAvis = ceil($totalAvis / $avisParPage);
 ?>
 
 <!DOCTYPE html>
@@ -61,9 +113,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mon Profil</title>
-    <link rel="stylesheet" href="Public/css/header.css">
-    <link rel="stylesheet" href="Public/css/main.css">
-    <link rel="stylesheet" href="Public/css/footer.css">
+    <link rel="stylesheet" href="/Public/css/header.css">
+    <link rel="stylesheet" href="/Public/css/main.css">
+    <link rel="stylesheet" href="/Public/css/footer.css">
 </head>
 <body>
     <?= include 'header.php'; ?>
@@ -91,6 +143,43 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
             <button type="submit">Modifier mon mot de passe</button>
         </form>
+        <aside class="avis-sidebar">
+            <h3>Mes Avis</h3>
+
+            <?php if (empty($avisList)): ?>
+                <p>Aucun avis publié.</p>
+            <?php else: ?>
+                <ul>
+                    <?php foreach ($avisList as $avis): ?>
+                        <li>
+                            <strong>Restaurant :</strong> <?= htmlspecialchars($avis['nomRestau']) ?> <br>
+                            <strong>Note :</strong> <?= htmlspecialchars($avis['note']) ?>/5 <br>
+                            <em><?= nl2br(htmlspecialchars($avis['texteAvis'])) ?></em> <br>
+                            <small>Posté le : <?= date('d/m/Y', $avis['datePoste']) ?></small> <br>
+
+                            <!-- Formulaire pour supprimer l'avis -->
+                            <form method="POST" action="">
+                                <input type="hidden" name="idAvis" value="<?= $avis['idAvis'] ?>">
+                                <button type="submit" name="supprimerAvis" class="delete-btn">🗑️ Supprimer</button>
+                            </form>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+
+                <!-- Pagination -->
+                <div class="pagination">
+                    <?php if ($pageAvis > 1): ?>
+                        <a href="?pageAvis=<?= $pageAvis - 1 ?>">← Précédent</a>
+                    <?php endif; ?>
+
+                    <span>Page <?= $pageAvis ?> sur <?= $totalPagesAvis ?></span>
+
+                    <?php if ($pageAvis < $totalPagesAvis): ?>
+                        <a href="?pageAvis=<?= $pageAvis + 1 ?>">Suivant →</a>
+                    <?php endif; ?>
+                </div>
+            <?php endif; ?>
+        </aside>
     </main>
     <?= include 'footer.php'; ?>
 </body>
