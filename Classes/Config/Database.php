@@ -11,7 +11,6 @@ class Database {
     private static ?PDO $pdo = null; // Utilisation d'une propriété statique pour stocker la connexion
     public static string $path = "../Data/database.db";
     public static function getConnection(): PDO {
-        var_dump(Database::$path);
         if (self::$pdo === null) { // Vérifie si la connexion existe déjà
             try {
                self::$pdo = new PDO('sqlite:' . Database::$path); 

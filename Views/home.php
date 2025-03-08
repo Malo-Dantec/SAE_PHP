@@ -27,7 +27,7 @@
             <!-- Filtres de types -->
             <div>
                 <?php
-                $types = ['fast_food', 'bar', 'café', 'pub', 'ice_cream', 'restaurant'];
+                $types = ['fast_food', 'bar', 'cafe', 'pub', 'ice_cream', 'restaurant'];
                 foreach ($types as $type):
                     $checked = (isset($_GET['types']) && in_array($type, $_GET['types'])) ? 'checked' : '';?>
                     <label>

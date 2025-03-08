@@ -22,5 +22,5 @@ loaddb_tests:
 
 .PHONY: coverage
 coverage:
-	pass
+	vendor/bin/phpunit --coverage-html coverage-report --coverage-filter ./Classes Tests/
 
