@@ -105,5 +105,16 @@ class RegisterTest extends TestCase
         // Vérifie que l'inscription échoue et que le message d'erreur est affiché
         $this->assertFalse($result);
         $this->assertStringContainsString("L'email ou le mot de passe est vide.", $output);
+
+        $_SERVER['REQUEST_METHOD'] = 'GET';
+        $_GET['email'] = '';
+        $_GET['password'] = '';
+
+        ob_start();
+        $result = $this->register->handleRequest();
+        $output = ob_get_clean();
+
+        // Vérifie que l'inscription échoue et que le message d'erreur est affiché
+        $this->assertFalse($result);
     }
 }

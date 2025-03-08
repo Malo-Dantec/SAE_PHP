@@ -6,6 +6,8 @@
         "psr-4": {
             "Classes\\": "Classes/"
         }
+    },
+    "require": {
+        "guzzlehttp/guzzle": "^7.9"
     }
-
 }

@@ -13,6 +13,8 @@
     <coverage processUncoveredFiles="true">
         <include>
             <directory>Classes</directory>
+
         </include>
+        
     </coverage>
 </phpunit>
