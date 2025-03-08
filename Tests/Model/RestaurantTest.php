@@ -14,7 +14,6 @@ class RestaurantTest extends TestCase
     protected function setUp(): void
     {
         $this->db = Database::getConnection();
-
     }
 
 

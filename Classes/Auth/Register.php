@@ -46,7 +46,6 @@ class Register {
             // Créer un nouvel utilisateur
             return $this->userModel->create($this->email, $this->password);
         }
-
         return false;
     }
 }
