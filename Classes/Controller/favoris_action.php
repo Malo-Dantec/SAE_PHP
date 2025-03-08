@@ -1,8 +1,12 @@
 <?php
 session_start();
 
+
+require_once __DIR__ . '/../../vendor/autoload.php';
 use Classes\Model\Favoris;
 use Classes\Config\Database;
+
+Database::$path = __DIR__."/../../Data/database.db";
 
 // Vérifier si l'utilisateur est connecté
 $idUser = $_SESSION['idUser'] ?? null;

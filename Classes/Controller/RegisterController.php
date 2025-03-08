@@ -6,19 +6,26 @@ use PDO;
 
 class RegisterController {
     private PDO $db;
+    private Register $register;
 
-    public function __construct(PDO $db) {
+    public function __construct(PDO $db,  Register $register = null) {
         $this->db = $db;
+        if ($register === null){
+            $this->register = new Register($this->db);
+        }
+        else{
+            $this->register = $register;
+        }
+        
     }
 
     public function showRegisterForm(): void {
-        $register = new Register($this->db); // Passe la connexion PDO
-        $register->render();
+        $this->register->render();
     }
 
     public function processRegister(): void {
-        $register = new Register($this->db); // Passe la connexion PDO
-        if ($register->handleRequest()) {
+        
+        if ($this->register->handleRequest()) {
             header('Location: /login.php'); // Rediriger après l'inscription
             exit;
         } else {
