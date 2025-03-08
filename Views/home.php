@@ -1,11 +1,64 @@
+<?php
+require_once __DIR__ . '/../vendor/autoload.php';
+
+use Classes\Config\Database;
+
+$db = Database::getConnection();
+
+$restaurantsParPage = 20;
+
+// Page actuelle (par défaut 1)
+$page = isset($_GET['page']) ? max(1, intval($_GET['page'])) : 1;
+$offset = ($page - 1) * $restaurantsParPage;
+
+
+$search = $_GET['search'] ?? '';
+$types = $_GET['types'] ?? [];
+
+// Construction de la requête SQL avec filtres
+$sql = "SELECT * FROM RESTAURANT WHERE 1";
+$params = [];
+
+if (!empty($search)) {
+    $sql .= " AND nomRestau LIKE ?";
+    $params[] = "%$search%";
+}
+
+if (!empty($types)) {
+    $placeholders = implode(',', array_fill(0, count($types), '?'));
+    $sql .= " AND typeRestau IN ($placeholders)";
+    $params = array_merge($params, $types);
+}
+
+$sql .= " LIMIT $restaurantsParPage OFFSET $offset";
+
+$stmt = $db->prepare($sql);
+$stmt->execute($params);
+$restaurants = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+// Récupérer le nombre total de restaurants pour la pagination
+$sqlCount = "SELECT COUNT(*) FROM RESTAURANT WHERE 1";
+if (!empty($search)) {
+    $sqlCount .= " AND nomRestau LIKE ?";
+}
+if (!empty($types)) {
+    $sqlCount .= " AND typeRestau IN ($placeholders)";
+}
+
+$stmtCount = $db->prepare($sqlCount);
+$stmtCount->execute($params);
+$totalRestaurants = $stmtCount->fetchColumn();
+$totalPages = ceil($totalRestaurants / $restaurantsParPage);
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <title>IUTables'O</title>
-    <link rel="stylesheet" href="Public\css\header.css">
-    <link rel="stylesheet" href="Public\css\main.css">
-    <link rel="stylesheet" href="Public\css\footer.css">
+    <link rel="stylesheet" href="/Public\css\header.css">
+    <link rel="stylesheet" href="/Public\css\main.css">
+    <link rel="stylesheet" href="/Public\css\footer.css">
 </head>
 <body>
     <?php 
@@ -47,6 +100,19 @@
                 </li>
             <?php endforeach; ?>
         </ul>
+
+        <div class="pagination">
+            <?php if ($page > 1): ?>
+                <a href="?page=<?= $page - 1 ?>&search=<?= urlencode($search) ?>&<?= http_build_query(['types' => $types]) ?>">← Précédent</a>
+            <?php endif; ?>
+
+            <span>Page <?= $page ?> sur <?= $totalPages ?></span>
+
+            <?php if ($page < $totalPages): ?>
+                <a href="?page=<?= $page + 1 ?>&search=<?= urlencode($search) ?>&<?= http_build_query(['types' => $types]) ?>">Suivant →</a>
+            <?php endif; ?>
+        </div>
+
     </main>
     <?php 
         include 'footer.php';
