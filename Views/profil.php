@@ -12,7 +12,7 @@ if (!$idUser) {
     exit;
 }
 
-// Récupérer l'email de l'utilisateur
+// Email de l'utilisateur
 $stmt = $db->prepare("SELECT email FROM USER WHERE idUser = ?");
 $stmt->execute([$idUser]);
 $user = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -25,9 +25,9 @@ $email = htmlspecialchars($user['email'], ENT_QUOTES, 'UTF-8');
 
 $message = "";
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $oldPassword = $_POST['old_password'] ?? '';
-    $newPassword = $_POST['new_password'] ?? '';
-    $confirmPassword = $_POST['confirm_password'] ?? '';
+    $oldPassword = $_POST['ancien_mdp'] ?? '';
+    $newPassword = $_POST['nouveau_mdp'] ?? '';
+    $confirmPassword = $_POST['meme_mdp'] ?? '';
 
     if (empty($oldPassword) || empty($newPassword) || empty($confirmPassword)) {
         $message = "Tous les champs sont obligatoires.";
@@ -70,7 +70,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <main>
         <h2>Mon profil</h2>
 
-        <?php if ($message): ?>
+        <?php if ($message === "Mot de passe mis à jour avec succès.") : ?>
+            <p style="color: green;"><?= htmlspecialchars($message) ?></p>
+        <?php else: ?>
             <p style="color: red;"><?= htmlspecialchars($message) ?></p>
         <?php endif; ?>
 
@@ -78,14 +80,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             <label for="email">Email :</label>
             <input type="email" id="email" name="email" value="<?= $email ?>" readonly>
 
-            <label for="old_password">Ancien mot de passe :</label>
-            <input type="password" id="old_password" name="old_password" required>
+            <label for="ancien_mdp">Ancien mot de passe :</label>
+            <input type="password" id="ancien_mdp" name="ancien_mdp" required>
 
-            <label for="new_password">Nouveau mot de passe :</label>
-            <input type="password" id="new_password" name="new_password" required>
+            <label for="nouveau_mdp">Nouveau mot de passe :</label>
+            <input type="password" id="nouveau_mdp" name="nouveau_mdp" required>
 
-            <label for="confirm_password">Confirmer le nouveau mot de passe :</label>
-            <input type="password" id="confirm_password" name="confirm_password" required>
+            <label for="meme_mdp">Confirmer le nouveau mot de passe :</label>
+            <input type="password" id="meme_mdp" name="meme_mdp" required>
 
             <button type="submit">Modifier mon mot de passe</button>
         </form>
