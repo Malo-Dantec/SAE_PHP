@@ -105,6 +105,14 @@ class Restaurant {
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
+    public static function rmRestau($id) : void
+    {
+        $pdo = Database::getConnection();
+        // Supprimer le restaurant avec l'ID spécifié
+        $stmt = $pdo->prepare("DELETE FROM RESTAURANT WHERE idRestau = ?");
+        $stmt->execute([$id]);
+    }
+
     public static function addJson(string $path, PDO $db){
         $loader = new DataLoaderJson($path);
         $loader->jsonToData($db);
@@ -133,5 +141,8 @@ class Restaurant {
         }
         return $restau;
     }
+
+    
+
 }
 ?>
