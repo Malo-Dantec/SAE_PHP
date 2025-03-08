@@ -41,7 +41,7 @@ class RestaurantTest extends TestCase
 
     public function testAddJson()
     {
-        Restaurant::addJson(__DIR__."/Data/test.json", $this->db);
+        Restaurant::addJson(__DIR__."/../Data/test.json", $this->db);
         $restaurant = Restaurant::getById(383);
         $this->assertEquals('Cha+', $restaurant["nomRestau"]);
         Restaurant::rmRestau(383);
