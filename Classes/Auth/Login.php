@@ -53,6 +53,10 @@ class Login {
 
     // Méthode pour authentifier l'utilisateur avec la base de données
     private function authenticate(string $email, string $password): ?int {
-        return $this->userModel->verifyPassword($email, $password);
+        $user = $this->userModel->findByEmail($email);
+        if ($user != null ) {
+            return $this->userModel->verifyPassword($email, $password);
+        }
+        return null;
     }
 }
