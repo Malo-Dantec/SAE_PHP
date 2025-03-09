@@ -63,34 +63,3 @@ CREATE TABLE FAVORIS (
     FOREIGN KEY (idRestau) REFERENCES RESTAURANT (idRestau),
     FOREIGN KEY (idUser) REFERENCES USER (idUser)
 );
-
-CREATE TABLE CARACTERISTIQUE (
-    idCarac INTEGER NOT NULL,
-    carcteristiqueRestau TEXT NOT NULL,
-    PRIMARY KEY (idCarac)
-);
-
-CREATE TABLE CARACTERISER ( 
-    idCarac INTEGER NOT NULL,
-    idRestau INTEGER NOT NULL,
-    PRIMARY KEY(idCarac, idRestau),
-    FOREIGN KEY (idCarac) REFERENCES CARACTERISTIQUE (idCarac),
-    FOREIGN KEY (idRestau) REFERENCES RESTAURANT (idRestau)
-);
-
-
-CREATE TABLE TYPE_CUISINE (
-    idTypeCuisine INTEGER NOT NULL,
-    nomCuisine TEXT NOT NULL,
-    PRIMARY KEY (idTypeCuisine)
-);
-
-
-CREATE TABLE CUISINER (
-    idTypeCuisine INTEGER NOT NULL,
-    idRestau INTEGER NOT NULL,
-    PRIMARY KEY(idTypeCuisine, idRestau),
-    FOREIGN KEY (idTypeCuisine) REFERENCES TYPE_CUISINE (idTypeCuisine),
-    FOREIGN KEY (idRestau) REFERENCES RESTAURANT (idRestau)
-);
-
