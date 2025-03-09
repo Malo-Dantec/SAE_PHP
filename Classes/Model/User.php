@@ -54,6 +54,11 @@ class User {
      * Supprimer un utilisateur par email.
      */
     public function deleteByEmail(string $email): bool {
+        $user = $this->findByEmail($email);
+        $avis = $this->getAvis($user["idUser"], 1);
+        foreach($avis as $avi){
+            $this->deleteAvis($user["idUser"], $avi["idAvis"]);
+        }
         $stmt = $this->db->prepare('DELETE FROM USER WHERE email = :email');
         return $stmt->execute(['email' => $email]);
     }

@@ -22,7 +22,8 @@ class Restaurant {
     private string $nomRegion;
     private int $codeDepartement; 
     private string $nomDepartement; 
-    private string $osm_edit;
+    private ?string $longitude;
+    private ?string $latitude;
     
 
 
@@ -41,7 +42,8 @@ class Restaurant {
         string $nomRegion,
         int $codeDepartement, 
         string $nomDepartement, 
-        string $osm_edit
+        ?string $longitude,
+        ?string $latitude
     ) {
         $this->db = $db;
         $this->typeRestau = $typeRestau;  
@@ -55,7 +57,8 @@ class Restaurant {
         $this->nomRegion = $nomRegion;
         $this->codeDepartement = $codeDepartement; 
         $this->nomDepartement = $nomDepartement; 
-        $this->osm_edit = $osm_edit;
+        $this->longitude = $longitude;
+        $this->latitude = $latitude;
 
     }
 
@@ -67,10 +70,10 @@ class Restaurant {
         $stmt = $this->db->prepare("
             INSERT INTO RESTAURANT (
                 typeRestau, nomRestau, heureOuverture, siret, numTel, codeCommune, nomCommune,
-                codeRegion, nomRegion,  codeDepartement, nomDepartement, osm_edit
+                codeRegion, nomRegion,  codeDepartement, nomDepartement, longitude, latitude
             ) VALUES (
                 :typeRestau, :nomRestau, :heureOuverture, :siret, :numTel, :codeCommune, :nomCommune,
-                :codeRegion, :nomRegion,  :codeDepartement, :nomDepartement, :osm_edit
+                :codeRegion, :nomRegion,  :codeDepartement, :nomDepartement, :longitude, :latitude
             )
         ");
     
@@ -86,7 +89,8 @@ class Restaurant {
             ':nomRegion' => $this->nomRegion,
             ':codeDepartement' => $this->codeDepartement, 
             ':nomDepartement' => $this->nomDepartement, 
-            ':osm_edit' => $this->osm_edit
+            ':longitude' => $this->longitude,
+            ':latitude' => $this->latitude,
         ]);
     }
     

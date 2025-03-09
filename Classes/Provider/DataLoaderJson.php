@@ -39,7 +39,8 @@ class DataLoaderJson {
                 $restau['code_region'],
                 $restau['code_departement'],
                 $restau['departement'],
-                $restau['osm_edit']
+                $restau['longitude'],
+                $restau['latitude']
             );
             $newRestau->addToBd();
         }

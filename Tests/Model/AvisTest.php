@@ -64,5 +64,32 @@ class AvisTest extends TestCase {
         // Vérifier que l'utilisateur a bien donné un avis
         $this->assertTrue($this->avis->has_given_avis(1, 1));
     }
+
+    public function testDeleteAvis(): void {
+        // Ajoute un avis à la base
+        $this->avis->ajouter_avis(1, 2, 5, "Parfait !");
+        $this->avis->ajouter_avis(1, 1, 5, "Parfait !");
+        
+        // Récupère le nombre d'avis et de "donner" avant la suppression
+        $nb_avis_before = $this->db->query("SELECT count(idAvis) FROM AVIS")->fetchColumn();
+        $nb_donner_before = $this->db->query("SELECT count(idAvis) FROM DONNER")->fetchColumn();
+        
+        // Supprime l'avis
+        $result = $this->avis->deleteAvis(1);
+        
+        // Vérifie que la suppression a réussi
+        $this->assertTrue($result);
+        
+        // Récupère le nombre d'avis et de "donner" après la suppression
+        $nb_avis_after = $this->db->query("SELECT count(idAvis) FROM AVIS")->fetchColumn();
+        $nb_donner_after = $this->db->query("SELECT count(idAvis) FROM DONNER")->fetchColumn();
+        
+        // Vérifie que l'avis a été supprimé de la table AVIS
+        $this->assertEquals($nb_avis_before - 1, $nb_avis_after);
+        
+        // Vérifie que l'avis a été supprimé de la table DONNER
+        $this->assertEquals($nb_donner_before - 1, $nb_donner_after);
+    }
+    
 }
 ?>
