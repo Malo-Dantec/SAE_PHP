@@ -51,7 +51,7 @@ class RestaurantTest extends TestCase
     public function testRmRestau()
     {
         // Ajouter un restaurant pour qu'il y ait des données dans la base
-        $restaurant = new Restaurant($this->db, 'FastFood', 'Test Restau', '12:00', '12345678901234', '0123456789', 12345, 'Commune1', 1, 'Region1', 1, 'Departement1', 'osm123');
+        $restaurant = new Restaurant($this->db, 'FastFood', 'Test Restau', '12:00', '12345678901234', '0123456789', 12345, 'Commune1', 1, 'Region1', 1, 'Departement1', '1', '1');
         $restaurant->addToBd();
 
         // Vérifiez que le restaurant a bien été ajouté (incrémentation de l'ID)

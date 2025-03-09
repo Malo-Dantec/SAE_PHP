@@ -136,15 +136,17 @@ class UserTest extends TestCase
         $password = "test123";
         $this->userModel->create($email, $password);
         $user = $this->userModel->findByEmail($email);
-        var_dump($this->userModel->getAvis($user['idUser'], 1));
         // Insérer des avis manuellement pour tester
-        $this->db->exec("INSERT INTO AVIS (note, texteAvis) VALUES (1, 5, 'Très bon')");
+        $this->db->exec("INSERT INTO AVIS (idAvis, note, texteAvis) VALUES (1, 5, 'Très bon')");
         $this->db->exec("INSERT INTO DONNER (idUser, idAvis, idRestau, datePoste) VALUES ({$user['idUser']}, 1, 1, '2024-03-09')");
 
         $avis = $this->userModel->getAvis($user['idUser'], 1);
         $this->assertCount(1, $avis);
         $this->assertEquals('Très bon', $avis[0]['texteAvis']);
+        $this->db->exec("DELETE FROM DONNER");
+        $this->db->exec("DELETE FROM AVIS");
     }
+    
 
     public function testCountAvis()
     {
@@ -160,6 +162,8 @@ class UserTest extends TestCase
 
         $avisCount = $this->userModel->countAvis($user['idUser']);
         $this->assertEquals(2, $avisCount);
+        $this->db->exec("DELETE FROM DONNER");
+        $this->db->exec("DELETE FROM AVIS");
     }
 
     public function testDeleteAvis()
@@ -174,9 +178,11 @@ class UserTest extends TestCase
 
         $this->assertEquals(1, $this->userModel->countAvis($user['idUser']));
 
-        $this->assertTrue($this->userModel->deleteAvis($user['idUser'], 1));
+        $this->assertTrue($this->userModel->deleteAvis($user['idUser'], 100));
 
         $this->assertEquals(0, $this->userModel->countAvis($user['idUser']));
+        $this->db->exec("DELETE FROM DONNER");
+        $this->db->exec("DELETE FROM AVIS");
     }
 
 }
