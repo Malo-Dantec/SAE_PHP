@@ -5,7 +5,7 @@ use Classes\Config\Database;
 
 $db = Database::getConnection();
 
-$restaurantsParPage = 20;
+$restaurantsParPage = 8;
 
 // Page actuelle (par défaut 1)
 $page = isset($_GET['page']) ? max(1, intval($_GET['page'])) : 1;

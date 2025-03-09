@@ -26,10 +26,10 @@ class RegisterController {
     public function processRegister(): void {
         
         if ($this->register->handleRequest()) {
-            header('Location: /login.php'); // Rediriger après l'inscription
+            header('Location: /Views/login.php'); // Rediriger après l'inscription
             exit;
         } else {
-            echo "Erreur lors de l'inscription.";
+            $this->register->render();
         }
     }
 }
