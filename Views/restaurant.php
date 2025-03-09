@@ -42,13 +42,22 @@ $avisList = $avisController->getAvis($idRestau);
     <main>
         <h1><?= htmlspecialchars($restaurant['nomRestau'] ?? 'Nom inconnu') ?></h1>
 
-        <!-- Formulaire d'ajout aux favoris -->
-        <form method="POST" action="Classes/Controller/favoris_action.php">
-            <input type="hidden" name="idRestau" value="<?= htmlspecialchars($restaurant['idRestau'] ?? '') ?>">
-            <button type="submit" name="action" value="<?= $est_favoris ? 'supprimer' : 'ajouter' ?>">
-                <?= $est_favoris ? "⭐" : "☆" ?>
-            </button>
-        </form>
+        
+        <?php
+            // si connecter peut ajouter au favoris
+            if ($_SESSION['idUser'] != null){
+                //Formulaire d'ajout aux favoris
+                ?>
+                <form method="POST" action="Classes/Controller/favoris_action.php">
+                    <input type="hidden" name="idRestau" value="<?= htmlspecialchars($restaurant['idRestau'] ?? '') ?>">
+                    <button type="submit" name="action" value="<?= $est_favoris ? 'supprimer' : 'ajouter' ?>">
+                        <?= $est_favoris ? "⭐" : "☆" ?>
+                    </button>
+                </form>
+                <?php
+            }
+        ?>
+        
 
         <p><strong>Type :</strong> <?= htmlspecialchars(ucfirst($restaurant['typeRestau']) ?? 'Non spécifié') ?></p>
         <!-- Téléphone -->
