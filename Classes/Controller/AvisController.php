@@ -31,7 +31,7 @@ class AvisController {
 
         // Ajouter l'avis dans la base de données
         $this->avis->ajouter_avis($idRestau, $idUser, $note, $texteAvis);
-        header("Location: /restaurant.php?idRestau=$idRestau");
+        header("Location: /index.php?action=show&idRestau=$idRestau");
         exit;
     }
 
