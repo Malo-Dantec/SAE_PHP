@@ -32,6 +32,9 @@ $avisList = $avisController->getAvis($idRestau);
     <link rel="stylesheet" href="/Public/css/header.css">
     <link rel="stylesheet" href="/Public/css/main.css">
     <link rel="stylesheet" href="/Public/css/footer.css">
+    <link href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" rel="stylesheet"/>
+    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
+    <script src="/Public/js/restaurant.js" defer></script>
 </head>
 <body>
     <?php include 'header.php'; ?>
@@ -60,10 +63,9 @@ $avisList = $avisController->getAvis($idRestau);
                     // Remplacer '33' par '+33' et extraire le reste du numéro
                     $telephone = '+33 ' . substr($telephone, 2);
                     
-                    // Si le numéro commence par +33 2, on laisse le 2 seul
-                    if (substr($telephone, 4, 1) === '2') {
-                        $telephone = substr($telephone, 0, 5) . ' ' . substr($telephone, 5);
-                    }
+                    // Si le numéro commence par +33 x, on laisse le x seul
+                    $telephone = substr($telephone, 0, 5) . ' ' . substr($telephone, 5);
+                    
                 }
             
                 // Ajouter un espace tous les 2 chiffres après le préfixe, sauf pour le premier 2
@@ -72,7 +74,7 @@ $avisList = $avisController->getAvis($idRestau);
 
         ?>
         <p><strong>Téléphone :</strong> <?= htmlspecialchars($telephone) ?></p>
-        <p><strong>Adresse :</strong> <?= htmlspecialchars($restaurant['nomCommune'] ?? 'Localisation inconnue') ?></p>
+        
         <!-- Heures d'ouverture -->
         <?php
             $heuresOuverture = $restaurant['heureOuverture'] ?? 'Non renseigné';
@@ -119,13 +121,10 @@ $avisList = $avisController->getAvis($idRestau);
                 $str_horaires = 'Non renseigné';
             }
         ?>
-
         <p><strong>Heures d'ouverture :</strong> <?= nl2br(htmlspecialchars($str_horaires)) ?></p>
-        
-
-
-
-
+        <p id="Adresse"></p>
+        <div id="osm-map" lon="<?=$restaurant["longitude"]?>" lat="<?=$restaurant["latitude"]?>"></div>
+      
         <!-- Affichage des avis existants -->
         <h2>Avis des clients</h2>
         <div id="avisContainer">
