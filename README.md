@@ -28,7 +28,16 @@ Voici la liste de toutes les fonctionnalités de notre site.
 
 ## Manuel utilisateur 
 
-Quand vous arriver sur le site vous arrivez sur la page d'inscription.
+Quand vous arriver sur le site vous arrivez sur la page d'accueil.
+
+![alt text](/Image/accueil_paslog.png)
+
+
+Vous pouvez voir les informations des restaurants mais vu que vous n'êtes pas connecté vous ne pouvez pas mettre de commentaire ou mettre le restaurant en favoris 
+
+![alt text](/Image/pas_connecte.png)
+
+Donc pour pouvoir vous connecter il faut d'abord s'inscrire. Pour aller sur la page d'inscription il faut cliquer sur la page inscription en haut de la page 
 
 ![alt text](Image/inscription.png)
 
@@ -36,11 +45,11 @@ Une fois inscrit cela vous enmène sur la page de connexion.
 
 ![alt text](Image/connexion.png)
 
-Après s'être connecté vous pouvez voir tous les restaurants. 
+
+Sur cette page vous pouvez voir le système de filtre grâce aux chekbox et à la barre de recherche.
 
 ![alt text](/Image/accueil.png)
 
-Sur cette page vous pouvez voir le système de filtre grâce aux chekbox et à la barre de recherche.
 
 Vous pouvez cliquer sur un restaurant pour avoir ses informations.
 
