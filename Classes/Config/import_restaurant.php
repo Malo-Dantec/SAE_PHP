@@ -27,8 +27,8 @@ if (!$restaurants) {
 }
 
 // Préparer la requête SQL
-$query = "INSERT INTO RESTAURANT (idRestau, typeRestau, nomRestau, heureOuverture, siret, numTel, codeCommune, nomCommune, codeRegion, nomRegion, codeDepartement, nomDepartement, osm_edit) 
-          VALUES (:idRestau, :typeRestau, :nomRestau, :heureOuverture, :siret, :numTel, :codeCommune, :nomCommune, :codeRegion, :nomRegion, :codeDepartement, :nomDepartement, :osm_edit)";
+$query = "INSERT INTO RESTAURANT (idRestau, typeRestau, nomRestau, heureOuverture, siret, numTel, codeCommune, nomCommune, codeRegion, nomRegion, codeDepartement, nomDepartement, latitude, longitude) 
+          VALUES (:idRestau, :typeRestau, :nomRestau, :heureOuverture, :siret, :numTel, :codeCommune, :nomCommune, :codeRegion, :nomRegion, :codeDepartement, :nomDepartement, :latitude, :longitude)";
 
 $stmt = $db->prepare($query);
 
@@ -52,7 +52,8 @@ foreach ($restaurants as $resto) {
             ':nomRegion'      => $resto['region'] ?? null,
             ':codeDepartement'=> $resto['code_departement'] ?? null,
             ':nomDepartement' => $resto['departement'] ?? null,
-            ':osm_edit'       => $resto['osm_edit'] ?? null
+            ':latitude'       => $resto['geo_point_2d']["lat"] ?? null,
+            ':longitude'       => $resto['geo_point_2d']["lon"] ?? null
         ]);
     } catch (\PDOException $e) {
         echo "Erreur lors de l'insertion de '{$resto['name']}' : " . $e->getMessage() . "\n";

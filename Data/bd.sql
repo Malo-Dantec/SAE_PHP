@@ -53,7 +53,8 @@ CREATE TABLE RESTAURANT (
     nomRegion TEXT NOT NULL,
     codeDepartement INTEGER NOT NULL,
     nomDepartement TEXT NOT NULL,
-    osm_edit TEXT
+    latitude TEXT,
+    longitude Text
 );
 
 CREATE TABLE FAVORIS (
