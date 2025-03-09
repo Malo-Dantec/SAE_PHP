@@ -116,6 +116,11 @@ $totalPagesAvis = ceil($totalAvis / $avisParPage);
     <link rel="stylesheet" href="/Public/css/header.css">
     <link rel="stylesheet" href="/Public/css/main.css">
     <link rel="stylesheet" href="/Public/css/footer.css">
+    <!-- Bootstrap CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<!-- Ton fichier CSS personnalisé -->
+<link rel="stylesheet" href="/Public/css/style.css">
+
 </head>
 <body>
     <?= include 'header.php'; ?>
@@ -128,21 +133,24 @@ $totalPagesAvis = ceil($totalAvis / $avisParPage);
             <p style="color: red;"><?= htmlspecialchars($message) ?></p>
         <?php endif; ?>
 
-        <form method="POST">
-            <label for="email">Email :</label>
-            <input type="email" id="email" name="email" value="<?= $email ?>" readonly>
+        <form method="POST" class="mb-4">
+    <div class="mb-3">
+        <label for="email" class="form-label">Email :</label>
+        <input type="email" id="email" name="email" class="form-control" value="<?= $email ?>" readonly>
+    </div>
 
-            <label for="ancien_mdp">Ancien mot de passe :</label>
-            <input type="password" id="ancien_mdp" name="ancien_mdp" required>
+    <div class="mb-3">
+        <label for="ancien_mdp" class="form-label">Ancien mot de passe :</label>
+        <input type="password" id="ancien_mdp" name="ancien_mdp" class="form-control" required>
+    </div>
 
-            <label for="nouveau_mdp">Nouveau mot de passe :</label>
-            <input type="password" id="nouveau_mdp" name="nouveau_mdp" required>
+    <div class="mb-3">
+        <label for="nouveau_mdp" class="form-label">Nouveau mot de passe :</label>
+        <input type="password" id="nouveau_mdp" name="nouveau_mdp" class="form-control" required>
+    </div>
 
-            <label for="meme_mdp">Confirmer le nouveau mot de passe :</label>
-            <input type="password" id="meme_mdp" name="meme_mdp" required>
-
-            <button type="submit">Modifier mon mot de passe</button>
-        </form>
+    <button type="submit" class="btn btn-danger w-100">Modifier mon mot de passe</button>
+</form>
         <aside class="avis-sidebar">
             <h3>Mes Avis</h3>
 

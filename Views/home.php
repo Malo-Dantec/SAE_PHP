@@ -56,9 +56,14 @@ $totalPages = ceil($totalRestaurants / $restaurantsParPage);
 <head>
     <meta charset="UTF-8">
     <title>IUTables'O</title>
-    <link rel="stylesheet" href="/Public\css\header.css">
+    <!-- <link rel="stylesheet" href="/Public\css\header.css">
     <link rel="stylesheet" href="/Public\css\main.css">
-    <link rel="stylesheet" href="/Public\css\footer.css">
+    <link rel="stylesheet" href="/Public\css\footer.css"> -->
+    <!-- Bootstrap CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<!-- Ton fichier CSS personnalisé -->
+<link rel="stylesheet" href="/Public/css/style.css">
+
 </head>
 <body>
     <?php 
@@ -91,27 +96,36 @@ $totalPages = ceil($totalRestaurants / $restaurantsParPage);
             </div>
         </form>
 
-        <ul>
-            <?php foreach ($restaurants as $restaurant): ?>
-                <li>
-                    <a href="index.php?action=show&idRestau=<?= urlencode($restaurant['idRestau']) ?>">
-                        <?= htmlspecialchars($restaurant['nomRestau'] ?? 'Nom inconnu') ?>
-                    </a> (<?= htmlspecialchars($restaurant['typeRestau'] ?? 'Type inconnu') ?>)
-                </li>
-            <?php endforeach; ?>
-        </ul>
+        <ul class="list-group">
+    <?php foreach ($restaurants as $restaurant): ?>
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            <a href="index.php?action=show&idRestau=<?= urlencode($restaurant['idRestau']) ?>" class="fw-bold">
+                <?= htmlspecialchars($restaurant['nomRestau'] ?? 'Nom inconnu') ?>
+            </a>
+            <span class="badge bg-primary"><?= htmlspecialchars($restaurant['typeRestau'] ?? 'Type inconnu') ?></span>
+        </li>
+    <?php endforeach; ?>
+</ul>
 
-        <div class="pagination">
-            <?php if ($page > 1): ?>
-                <a href="?page=<?= $page - 1 ?>&search=<?= urlencode($search) ?>&<?= http_build_query(['types' => $types]) ?>">← Précédent</a>
-            <?php endif; ?>
+<nav>
+    <ul class="pagination justify-content-center">
+        <?php if ($page > 1): ?>
+            <li class="page-item">
+                <a class="page-link" href="?page=<?= $page - 1 ?>">← Précédent</a>
+            </li>
+        <?php endif; ?>
 
-            <span>Page <?= $page ?> sur <?= $totalPages ?></span>
+        <li class="page-item active">
+            <span class="page-link">Page <?= $page ?> sur <?= $totalPages ?></span>
+        </li>
 
-            <?php if ($page < $totalPages): ?>
-                <a href="?page=<?= $page + 1 ?>&search=<?= urlencode($search) ?>&<?= http_build_query(['types' => $types]) ?>">Suivant →</a>
-            <?php endif; ?>
-        </div>
+        <?php if ($page < $totalPages): ?>
+            <li class="page-item">
+                <a class="page-link" href="?page=<?= $page + 1 ?>">Suivant →</a>
+            </li>
+        <?php endif; ?>
+    </ul>
+</nav>
 
     </main>
     <?php 
