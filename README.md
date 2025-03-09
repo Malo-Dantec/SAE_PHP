@@ -24,7 +24,36 @@ Voici la liste de toutes les fonctionnalités de notre site.
 - Pouvoir changer son mot de passe
 - Pouvoir regarder les avis qu'on a laissé
 - Supprimer ses avis
-- Un administrateur peut supprimer les avis de n'importe qui
 
 
+## Manuel utilisateur 
 
+Quand vous arriver sur le site vous arrivez sur la page d'inscription.
+
+![alt text](Image/inscription.png)
+
+Une fois inscrit cela vous enmène sur la page de connexion.
+
+![alt text](Image/connexion.png)
+
+Après s'être connecté vous pouvez voir tous les restaurants. 
+
+![alt text](/Image/accueil.png)
+
+Sur cette page vous pouvez voir le système de filtre grâce aux chekbox et à la barre de recherche.
+
+Vous pouvez cliquer sur un restaurant pour avoir ses informations.
+
+![alt text](/Image/information.png)
+
+Sur la page d'information vous pouvez voir l'étoile qui permet de mettre en favoris, les informations du restaurant, ou le trouver sur la carte, l'avis des clients et pour finir un formulaire pour que l'utilisateur puisse donner son propre avis.
+
+Il y a une page pour voir les favoris ou quand on clique dessus on retrouve les restaurants mis en favoris. 
+
+![alt text](/Image/favoris.png) 
+
+Et pour finir il y a la page profil qui vous permettra de retrouver vos informations.
+
+![alt text](/Image/profil.png)
+
+Vous pouvez modifier votre mot de passe sur cette page, regarder les avis que vous avez laissé et les supprimer si vous le souhaitez.
