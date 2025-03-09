@@ -50,20 +50,14 @@ class Avis {
     }
 
    // Supprimer un avis
-   public function deleteAvis(int $idUser, int $idAvis): bool {
+   public function deleteAvis(int $idAvis): bool {
 
-    $stmtDelete = $this->db->prepare("DELETE FROM DONNER WHERE idAvis = ? AND idUser = ?");
-    $stmtDelete->execute([$idAvis, $idUser]);
+    $stmtDelete = $this->db->prepare("DELETE FROM DONNER WHERE idAvis = ?");
+    $stmtDelete->execute([$idAvis]);
+    
+    $stmtDeleteAvis = $this->db->prepare("DELETE FROM AVIS WHERE idAvis = ?");
+    return $stmtDeleteAvis->execute([$idAvis]);
 
-    $stmtCheck = $this->db->prepare("SELECT COUNT(*) FROM DONNER WHERE idAvis = ?");
-    $stmtCheck->execute([$idAvis]);
-    $count = $stmtCheck->fetchColumn();
-
-    if ($count == 0) {
-        $stmtDeleteAvis = $this->db->prepare("DELETE FROM AVIS WHERE idAvis = ?");
-        return $stmtDeleteAvis->execute([$idAvis]);
-    }
-
-    return true;
     }
 }
+ 
