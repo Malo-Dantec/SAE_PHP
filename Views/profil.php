@@ -1,9 +1,13 @@
 <?php
 require_once __DIR__ . '/../vendor/autoload.php';
 
-session_start();
 use Classes\Config\Database;
+use Classes\Model\User;
+use Classes\Model\Avis;
 
+session_start();
+
+// Connexion à la base de données
 $db = Database::getConnection();
 $idUser = $_SESSION['idUser'] ?? null;
 
@@ -12,44 +16,29 @@ if (!$idUser) {
     exit;
 }
 
-// Email de l'utilisateur
-$stmt = $db->prepare("SELECT email FROM USER WHERE idUser = ?");
-$stmt->execute([$idUser]);
-$user = $stmt->fetch(PDO::FETCH_ASSOC);
+// Instanciation des modèles
+$userModel = new User($db);
+$avisModel = new Avis($db);
 
-if (!$user) {
+// Récupérer l'email de l'utilisateur
+$email = $userModel->getEmail($idUser);
+if (!$email) {
     die("Utilisateur non trouvé.");
 }
 
-$email = htmlspecialchars($user['email'], ENT_QUOTES, 'UTF-8');
-
+// Supprimer un avis
 if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['supprimerAvis'])) {
     $idAvis = $_POST['idAvis'] ?? null;
-
     if ($idAvis) {
-        // Supprimer l'avis dans la table DONNER (car FK)
-        $stmtDelete = $db->prepare("DELETE FROM DONNER WHERE idAvis = ? AND idUser = ?");
-        $stmtDelete->execute([$idAvis, $idUser]);
-
-        // Supprimer l'avis dans la table AVIS (seulement si plus utilisé)
-        $stmtCheck = $db->prepare("SELECT COUNT(*) FROM DONNER WHERE idAvis = ?");
-        $stmtCheck->execute([$idAvis]);
-        $count = $stmtCheck->fetchColumn();
-
-        if ($count == 0) {
-            $stmtDeleteAvis = $db->prepare("DELETE FROM AVIS WHERE idAvis = ?");
-            $stmtDeleteAvis->execute([$idAvis]);
-        }
-
-        // Recharger la page pour voir les changements
-        header("Location: profil.php?pageAvis=$pageAvis");
+        $avisModel->deleteAvis($idUser, $idAvis);
+        header("Location: profil.php?pageAvis=" . ($_GET['pageAvis'] ?? 1));
         exit;
     }
 }
 
-
+// Modifier le mot de passe
 $message = "";
-if ($_SERVER["REQUEST_METHOD"] === "POST") {
+if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['nouveau_mdp'])) {
     $ancienMDP = $_POST['ancien_mdp'] ?? '';
     $nouveauMDP = $_POST['nouveau_mdp'] ?? '';
     $memeMDP = $_POST['meme_mdp'] ?? '';
@@ -58,53 +47,20 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $message = "Tous les champs sont obligatoires.";
     } elseif ($nouveauMDP !== $memeMDP) {
         $message = "Les nouveaux mots de passe ne correspondent pas.";
+    } elseif (!$userModel->checkPassword($idUser, $ancienMDP)) {
+        $message = "Ancien mot de passe incorrect.";
+    } elseif ($userModel->updatePassword($idUser, $nouveauMDP)) {
+        $message = "Mot de passe mis à jour avec succès.";
     } else {
-        // Vérifif de l'ancien mdp
-        $stmt = $db->prepare("SELECT password FROM USER WHERE idUser = ?");
-        $stmt->execute([$idUser]);
-        $userData = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        if (!password_verify($ancienMDP, $userData['password'])) {
-            $message = "Ancien mot de passe incorrect.";
-        } else {
-            // Maj du mot de passe
-            $hashedPassword = password_hash($nouveauMDP, PASSWORD_DEFAULT);
-            $updateStmt = $db->prepare("UPDATE USER SET password = ? WHERE idUser = ?");
-            if ($updateStmt->execute([$hashedPassword, $idUser])) {
-                $message = "Mot de passe mis à jour avec succès.";
-            } else {
-                $message = "Erreur lors de la mise à jour.";
-            }
-        }
+        $message = "Erreur lors de la mise à jour.";
     }
 }
 
-// Nombre d'avis par page
-$avisParPage = 3;
+// Récupérer les avis avec pagination
 $pageAvis = isset($_GET['pageAvis']) ? max(1, intval($_GET['pageAvis'])) : 1;
-$offsetAvis = ($pageAvis - 1) * $avisParPage;
-
-$sqlAvis = "SELECT a.idAvis, a.note, a.texteAvis, d.datePoste, r.nomRestau
-            FROM AVIS a
-            JOIN DONNER d ON a.idAvis = d.idAvis
-            JOIN RESTAURANT r ON d.idRestau = r.idRestau
-            WHERE d.idUser = ?
-            ORDER BY d.datePoste DESC
-            LIMIT $avisParPage OFFSET $offsetAvis";
-
-$stmtAvis = $db->prepare($sqlAvis);
-$stmtAvis->execute([$idUser]);
-$avisList = $stmtAvis->fetchAll(PDO::FETCH_ASSOC);
-
-// Pagination
-$sqlCountAvis = "SELECT COUNT(*) FROM AVIS a
-                 JOIN DONNER d ON a.idAvis = d.idAvis
-                 WHERE d.idUser = ?";
-
-$stmtCountAvis = $db->prepare($sqlCountAvis);
-$stmtCountAvis->execute([$idUser]);
-$totalAvis = $stmtCountAvis->fetchColumn();
-$totalPagesAvis = ceil($totalAvis / $avisParPage);
+$avisList = $userModel->getAvis($idUser, $pageAvis);
+$totalAvis = $userModel->countAvis($idUser);
+$totalPagesAvis = ceil($totalAvis / 3);
 ?>
 
 <!DOCTYPE html>
@@ -127,10 +83,10 @@ $totalPagesAvis = ceil($totalAvis / $avisParPage);
     <main>
         <h2>Mon profil</h2>
 
-        <?php if ($message === "Mot de passe mis à jour avec succès.") : ?>
-            <p style="color: green;"><?= htmlspecialchars($message) ?></p>
-        <?php else: ?>
-            <p style="color: red;"><?= htmlspecialchars($message) ?></p>
+        <?php if (!empty($message)): ?>
+            <p style="color: <?= $message === "Mot de passe mis à jour avec succès." ? 'green' : 'red' ?>;">
+                <?= htmlspecialchars($message) ?>
+            </p>
         <?php endif; ?>
 
         <form method="POST" class="mb-4">
@@ -150,10 +106,10 @@ $totalPagesAvis = ceil($totalAvis / $avisParPage);
     </div>
 
     <button type="submit" class="btn btn-danger w-100">Modifier mon mot de passe</button>
-</form>
+        </form>
+  
         <aside class="avis-sidebar">
             <h3>Mes Avis</h3>
-
             <?php if (empty($avisList)): ?>
                 <p>Aucun avis publié.</p>
             <?php else: ?>
@@ -166,7 +122,7 @@ $totalPagesAvis = ceil($totalAvis / $avisParPage);
                             <small>Posté le : <?= date('d/m/Y', $avis['datePoste']) ?></small> <br>
 
                             <!-- Formulaire pour supprimer l'avis -->
-                            <form method="POST" action="">
+                            <form method="POST">
                                 <input type="hidden" name="idAvis" value="<?= $avis['idAvis'] ?>">
                                 <button type="submit" name="supprimerAvis" class="delete-btn">🗑️ Supprimer</button>
                             </form>

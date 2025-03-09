@@ -4,7 +4,6 @@ run:
 
 .PHONY: install
 install:
-	sudo ap
 	composer install
 
 .PHONY: tests

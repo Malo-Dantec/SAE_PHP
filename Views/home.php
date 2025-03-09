@@ -5,7 +5,7 @@ use Classes\Config\Database;
 
 $db = Database::getConnection();
 
-$restaurantsParPage = 20;
+$restaurantsParPage = 8;
 
 // Page actuelle (par défaut 1)
 $page = isset($_GET['page']) ? max(1, intval($_GET['page'])) : 1;
@@ -85,11 +85,14 @@ $totalPages = ceil($totalRestaurants / $restaurantsParPage);
             <!-- Filtres de types -->
             <div>
                 <?php
-                $types = ['fast_food', 'bar', 'cafe', 'pub', 'ice_cream', 'restaurant'];
-                foreach ($types as $type):
-                    $checked = (isset($_GET['types']) && in_array($type, $_GET['types'])) ? 'checked' : '';?>
+                $typesDispo = ['fast_food', 'bar', 'cafe', 'pub', 'ice_cream', 'restaurant'];
+                $typesSelectionnes = $_GET['types'] ?? [];
+
+                foreach ($typesDispo as $type):
+                    $checked = (!empty($typesSelectionnes) && in_array($type, $typesSelectionnes)) ? 'checked' : '';
+                ?>
                     <label>
-                        <input type="checkbox" name="types[]" value="<?= $type ?>" <?= $checked ?>>
+                        <input type="checkbox" name="types[]" value="<?= htmlspecialchars($type) ?>" <?= $checked ?>>
                         <?= ucfirst($type) ?> <!-- ucfirst met en majuscule la première lettre --> 
                     </label>
                 <?php endforeach; ?>
