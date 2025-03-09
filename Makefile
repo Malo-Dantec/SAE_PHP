@@ -5,6 +5,7 @@ run:
 .PHONY: install
 install:
 	composer install
+	make loaddb
 
 .PHONY: tests
 tests:
